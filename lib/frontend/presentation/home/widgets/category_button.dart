@@ -33,8 +33,8 @@ class CategoryButton extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(6.0)),
             boxShadow: [
               BoxShadow(
-                offset: const Offset(0, 4),
-                blurRadius: 20.0,
+                offset: const Offset(0, 1),
+                blurRadius: 12.0,
                 blurStyle: BlurStyle.outer,
                 spreadRadius: 0,
                 color: AppColor.black.withOpacity(0.2),

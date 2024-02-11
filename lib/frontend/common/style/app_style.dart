@@ -6,10 +6,24 @@ class AppTextStyle {
   static TextStyle black({
     double fontSize = 12.0,
     TextOverflow overflow = TextOverflow.visible,
-    FontWeight fontWeight = FontWeight.bold,
+    FontWeight fontWeight = FontWeight.w400,
   }) {
     return GoogleFonts.openSans(
       color: AppColor.font,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      
+      textStyle: TextStyle(overflow: overflow),
+    );
+  }
+
+  static TextStyle white({
+    double fontSize = 12.0,
+    TextOverflow overflow = TextOverflow.visible,
+    FontWeight fontWeight = FontWeight.bold,
+  }) {
+    return GoogleFonts.openSans(
+      color: AppColor.white,
       fontSize: fontSize,
       fontWeight: fontWeight,
       textStyle: TextStyle(overflow: overflow),
