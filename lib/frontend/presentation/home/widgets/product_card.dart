@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
-import 'package:kerja_praktek/frontend/presentation/home/models/product_model.dart';
+import 'package:kerja_praktek/models/product.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -12,7 +12,7 @@ class ProductCard extends StatelessWidget {
     // required this.onButtonPressed,
   });
 
-  final ProductModel data;
+  final Product data;
   // final VoidCallback onButtonPressed;
 
   @override
@@ -21,6 +21,7 @@ class ProductCard extends StatelessWidget {
       children: [
         Container(
           width: MediaQuery.of(context).size.width / 2.4,
+          height: MediaQuery.of(context).size.width / 1,
           padding: const EdgeInsets.all(16.0),
           decoration: ShapeDecoration(
             color: AppColor.white,
@@ -47,7 +48,7 @@ class ProductCard extends StatelessWidget {
                 textAlign: TextAlign.start,
                 style: AppTextStyle.black(
                   fontWeight: FontWeight.w700,
-                  fontSize: 12.0,
+                  fontSize: 10.0,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -58,7 +59,7 @@ class ProductCard extends StatelessWidget {
                   fontSize: 10.0,
                 ),
               ),
-              const SpaceHeight(12.0),
+              const SpaceHeight(7.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -67,11 +68,10 @@ class ProductCard extends StatelessWidget {
                       "Rp ${data.priceFormat}",
                       style: AppTextStyle.black(
                         fontWeight: FontWeight.w700,
-                        fontSize: 12.0,
+                        fontSize: 10.0,
                       ),
                     ),
                   ),
-                  const SpaceWidth(25.0),
                   InkWell(
                     onTap: () {
                       // Bloc that handles order item

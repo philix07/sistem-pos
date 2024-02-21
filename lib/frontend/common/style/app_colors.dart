@@ -13,7 +13,5 @@ class AppColor {
 
   static const primary = Color(0xff3949AB);
 
-  static const lightBlue = Color(0xffC7D0EB);
-
-  static const Color disabled = Color(0xffC8D1E1);
+  static const disabled = Color(0xffC8D1E1);
 }

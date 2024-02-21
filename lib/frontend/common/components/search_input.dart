@@ -18,25 +18,6 @@ class SearchInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return TextFormField(
-    //   onChanged: onChanged,
-    //   decoration: InputDecoration(
-    //     label: Text(
-    //       title,
-    //       style: AppTextStyle.black(fontSize: 16.0),
-    //     ),
-    //     border: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(12.0),
-    //       borderSide: const BorderSide(color: AppColor.lightBlue),
-    //     ),
-    //     focusedBorder: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(12.0),
-    //       borderSide: const BorderSide(color: AppColor.lightBlue),
-    //     ),
-    //     icon: const Icon(Icons.search_rounded, color: AppColor.lightBlue),
-    //   ),
-    // );
-
     return Container(
       decoration: BoxDecoration(
         color: AppColor.white,

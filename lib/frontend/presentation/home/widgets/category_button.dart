@@ -8,7 +8,6 @@ class CategoryButton extends StatelessWidget {
   final String label;
   final bool isActive;
   final VoidCallback onPressed;
-  final double size;
 
   const CategoryButton({
     super.key,
@@ -16,7 +15,6 @@ class CategoryButton extends StatelessWidget {
     required this.label,
     required this.onPressed,
     this.isActive = false,
-    this.size = 80,
   });
 
   @override
@@ -26,7 +24,7 @@ class CategoryButton extends StatelessWidget {
         onTap: onPressed,
         borderRadius: const BorderRadius.all(Radius.circular(6.0)),
         child: Container(
-          width: size,
+          width: MediaQuery.of(context).size.width / 5,
           padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
             color: isActive ? AppColor.primary : AppColor.white,
@@ -34,9 +32,8 @@ class CategoryButton extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 offset: const Offset(0, 1),
-                blurRadius: 12.0,
+                blurRadius: 6.0,
                 blurStyle: BlurStyle.outer,
-                spreadRadius: 0,
                 color: AppColor.black.withOpacity(0.2),
               ),
             ],
@@ -51,12 +48,15 @@ class CategoryButton extends StatelessWidget {
                 ),
               ),
               const SpaceHeight(10.0),
-              Text(
-                label,
-                style: TextStyle(
-                  color: isActive ? AppColor.white : AppColor.primary,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
+              Flexible(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  style: TextStyle(
+                    color: isActive ? AppColor.white : AppColor.primary,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ],

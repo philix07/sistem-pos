@@ -5,7 +5,7 @@ import 'package:iconly/iconly.dart';
 import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/presentation/admin/admin_page.dart';
-import 'package:kerja_praktek/frontend/presentation/cart/cart_page.dart';
+import 'package:kerja_praktek/frontend/presentation/payment/payment_page.dart';
 import 'package:kerja_praktek/frontend/presentation/history/history_page.dart';
 import 'package:kerja_praktek/frontend/presentation/home/homepage.dart';
 import 'package:kerja_praktek/frontend/presentation/home/widgets/bottom_nav_item.dart';
@@ -45,7 +45,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    const CartPage(),
+    const PaymentPage(),
     const HistoryPage(),
     const AdminPage(),
   ];

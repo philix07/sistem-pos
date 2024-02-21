@@ -12,7 +12,6 @@ class AppTextStyle {
       color: AppColor.font,
       fontSize: fontSize,
       fontWeight: fontWeight,
-      
       textStyle: TextStyle(overflow: overflow),
     );
   }
@@ -50,6 +49,19 @@ class AppTextStyle {
   }) {
     return GoogleFonts.openSans(
       color: AppColor.disabled,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      textStyle: TextStyle(overflow: overflow),
+    );
+  }
+
+  static TextStyle red({
+    double fontSize = 12.0,
+    TextOverflow overflow = TextOverflow.visible,
+    FontWeight fontWeight = FontWeight.bold,
+  }) {
+    return GoogleFonts.openSans(
+      color: Colors.redAccent,
       fontSize: fontSize,
       fontWeight: fontWeight,
       textStyle: TextStyle(overflow: overflow),
