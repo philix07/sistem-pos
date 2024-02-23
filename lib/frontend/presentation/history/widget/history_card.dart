@@ -35,7 +35,8 @@ class HistoryCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Flexible(
+          FittedBox(
+            fit: BoxFit.scaleDown,
             child: Text(
               "METODE PEMBAYARAN",
               maxLines: 1,
@@ -44,11 +45,31 @@ class HistoryCard extends StatelessWidget {
           ),
           Flexible(child: Text("Tunai", style: subTextStyle)),
           const SpaceHeight(10.0),
-          Flexible(child: Text("TOTAL TAGIHAN", maxLines: 1, style: mainTextStyle)),
-          Flexible(child: Text("Rp XXX.XXX.XXX", maxLines: 1, style: subTextStyle)),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              "TOTAL TAGIHAN",
+              maxLines: 1,
+              style: mainTextStyle,
+            ),
+          ),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text("Rp XXX.XXX.XXX", maxLines: 1, style: subTextStyle),
+          ),
           const SpaceHeight(10.0),
-          Flexible(child: Text("WAKTU TRANSAKSI", maxLines: 1, style: mainTextStyle)),
-          Flexible(child: Text("25 November, 11:17 ", maxLines: 1, style: subTextStyle)),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text("WAKTU TRANSAKSI", maxLines: 1, style: mainTextStyle),
+          ),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              "25 November, 11:17 ",
+              maxLines: 1,
+              style: subTextStyle,
+            ),
+          ),
         ],
       ),
     );

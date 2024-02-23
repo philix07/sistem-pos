@@ -41,7 +41,6 @@ class OrderCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  flex: 2,
                   child: Text(
                     "Item Name That's Really Really Really Long Really Long Long Long",
                     maxLines: 2,
@@ -52,45 +51,42 @@ class OrderCard extends StatelessWidget {
                   ),
                 ),
                 const SpaceHeight(5.0),
-                Expanded(
-                  flex: 1,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: AppColor.primary,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.remove,
-                            color: Colors.white,
-                            size: 20,
-                          ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InkWell(
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: AppColor.primary,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.remove,
+                          color: Colors.white,
+                          size: 20,
                         ),
                       ),
-                      Text(
-                        "qty",
-                        style: AppTextStyle.black(fontWeight: FontWeight.w700),
-                      ),
-                      InkWell(
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: AppColor.primary,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.add,
-                            color: Colors.white,
-                            size: 20,
-                          ),
+                    ),
+                    Text(
+                      "qty",
+                      style: AppTextStyle.black(fontWeight: FontWeight.w700),
+                    ),
+                    InkWell(
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: AppColor.primary,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 20,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 )
               ],
             ),
@@ -102,7 +98,8 @@ class OrderCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Flexible(
+                FittedBox(
+                  fit: BoxFit.scaleDown,
                   child: Text(
                     "Rp X.XXX.XXX",
                     maxLines: 1,

@@ -48,7 +48,8 @@ class CategoryButton extends StatelessWidget {
                 ),
               ),
               const SpaceHeight(10.0),
-              Flexible(
+              FittedBox(
+                fit: BoxFit.scaleDown,
                 child: Text(
                   label,
                   maxLines: 1,
