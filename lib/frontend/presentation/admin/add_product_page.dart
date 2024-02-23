@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kerja_praktek/data/repository/product_repository.dart';
 import 'package:kerja_praktek/frontend/common/components/app_back_bar.dart';
 import 'package:kerja_praktek/frontend/common/components/app_button.dart';
 import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
@@ -10,6 +12,9 @@ import 'package:kerja_praktek/frontend/common/components/app_text_field.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
+import 'package:kerja_praktek/frontend/presentation/home/bloc/product/product_bloc.dart';
+import 'package:kerja_praktek/models/product.dart';
+import 'package:uuid/uuid.dart';
 
 class AddProductPage extends StatefulWidget {
   const AddProductPage({super.key});
@@ -31,6 +36,8 @@ class _AddProductPageState extends State<AddProductPage> {
 
   @override
   Widget build(BuildContext context) {
+    var productBloc = BlocProvider.of<ProductBloc>(context);
+
     return AppScaffold(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SingleChildScrollView(
@@ -86,7 +93,10 @@ class _AddProductPageState extends State<AddProductPage> {
                                 image: AssetImage(
                                 "assets/images/pick-image.png",
                               ))
-                            : DecorationImage(image: FileImage(image!)),
+                            : DecorationImage(
+                                image: FileImage(image!),
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                     AppButton(
@@ -156,7 +166,22 @@ class _AddProductPageState extends State<AddProductPage> {
                 isActive: true,
                 width: double.maxFinite,
                 height: 60.0,
-                onTap: () {},
+                onTap: () async {
+                  //TODO: Add Product To Database
+
+                  //Create The Product Instance
+                  var product = Product(
+                    id: const Uuid().v4(),
+                    image: image!.path,
+                    name: nameController.text,
+                    category: ProductCategory.fromString(selectedCategory),
+                    price: int.parse(priceController.text),
+                    isAvailable: true,
+                  );
+
+                  //Add Product To Database
+                  productBloc.add(AddProduct(product: product));
+                },
               ),
               const SpaceHeight(8.0),
               SizedBox(

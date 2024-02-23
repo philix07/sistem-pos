@@ -4,10 +4,14 @@ import 'package:kerja_praktek/models/product.dart';
 
 class ProductRepository {
   //Repository is a class that's interacting between "Services" and "View Model"
-  ProductService service = ProductService();
+  ProductService _service = ProductService();
+
+  Future<String> addProduct(Product product) async {
+    return await _service.addProduct(product);
+  }
 
   Future<Either<String, List<Product>>> fetchAll() async {
-    var result = await service.fetchAll();
+    var result = await _service.fetchAll();
     bool isError = false;
     String message = "";
     List<Product> productData = [];

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kerja_praktek/firebase_options.dart';
 import 'package:iconly/iconly.dart';
 import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/presentation/admin/admin_page.dart';
+import 'package:kerja_praktek/frontend/presentation/home/bloc/product/product_bloc.dart';
 import 'package:kerja_praktek/frontend/presentation/payment/payment_page.dart';
 import 'package:kerja_praktek/frontend/presentation/history/history_page.dart';
 import 'package:kerja_praktek/frontend/presentation/home/homepage.dart';
@@ -25,10 +27,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter Demo',
-      home: DashboardPage(),
-      // home: AuthPage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => ProductBloc()),
+      ],
+      child: const MaterialApp(
+        home: DashboardPage(),
+        title: "Kerja Praktek",
+      ),
     );
   }
 }

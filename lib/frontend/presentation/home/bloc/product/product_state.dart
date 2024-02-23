@@ -16,5 +16,4 @@ final class ProductError extends ProductState {
   final String message;
 
   ProductError({required this.message});
-
 }

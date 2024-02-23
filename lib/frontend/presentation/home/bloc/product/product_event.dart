@@ -15,3 +15,9 @@ final class SearchProduct extends ProductEvent {
 
   SearchProduct({required this.keyword});
 }
+
+final class AddProduct extends ProductEvent {
+  final Product product;
+
+  AddProduct({required this.product});
+}

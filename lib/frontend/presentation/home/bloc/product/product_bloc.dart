@@ -10,10 +10,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   List<Product> products = [];
 
   ProductBloc() : super(ProductInitial()) {
-    on<ProductEvent>((event, emit) {
-      // TODO: implement event handler
-    });
-
     on<FetchAll>((event, emit) async {
       emit(ProductLoading());
 
@@ -43,6 +39,12 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
     on<SearchProduct>((event, emit) {
       emit(ProductLoading());
+    });
+
+    on<AddProduct>((event, emit) async {
+      emit(ProductLoading());
+
+      await repository.addProduct(event.product);
     });
   }
 }
