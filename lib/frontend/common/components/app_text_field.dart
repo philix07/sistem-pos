@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
 
@@ -7,6 +8,8 @@ class AppTextField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.labelText,
+    required this.inputFormatter,
+    this.validator,
     this.enabled = true,
     this.readOnly = false,
     this.height = 50,
@@ -21,6 +24,8 @@ class AppTextField extends StatelessWidget {
   final double width;
   final double height;
   final double fontSize;
+  final String? Function(String?)? validator;
+  final TextInputFormatter inputFormatter;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +34,8 @@ class AppTextField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         readOnly: readOnly,
+        validator: validator,
+        inputFormatters: [inputFormatter],
         style: AppTextStyle.black(
           fontSize: fontSize,
           fontWeight: FontWeight.w600,

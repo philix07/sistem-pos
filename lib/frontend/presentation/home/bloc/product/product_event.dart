@@ -21,3 +21,4 @@ final class AddProduct extends ProductEvent {
 
   AddProduct({required this.product});
 }
+

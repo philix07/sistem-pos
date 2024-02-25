@@ -67,19 +67,25 @@ class AppButton extends StatelessWidget {
                     height: iconHeight,
                   ),
                   const SpaceHeight(5.0),
-                  Text(
-                    title,
-                    style: isActive
-                        ? AppTextStyle.white(fontSize: fontSize)
-                        : AppTextStyle.blue(fontSize: fontSize),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      title,
+                      style: isActive
+                          ? AppTextStyle.white(fontSize: fontSize)
+                          : AppTextStyle.blue(fontSize: fontSize),
+                    ),
                   ),
                 ],
               )
-            : Text(
-                title,
-                style: isActive
-                    ? AppTextStyle.white(fontSize: fontSize)
-                    : AppTextStyle.blue(fontSize: fontSize),
+            : FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  title,
+                  style: isActive
+                      ? AppTextStyle.white(fontSize: fontSize)
+                      : AppTextStyle.blue(fontSize: fontSize),
+                ),
               ),
       ),
     );
@@ -147,23 +153,28 @@ class AppIconButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   isSvg
-                      ? SvgPicture.asset(
-                          iconPath!,
-                          width: svgWidth,
-                          height: svgHeight,
-                          colorFilter:
-                              ColorFilter.mode(childColor, BlendMode.srcIn),
+                      ? Expanded(
+                          child: SvgPicture.asset(
+                            iconPath!,
+                            width: svgWidth,
+                            height: svgHeight,
+                            colorFilter:
+                                ColorFilter.mode(childColor, BlendMode.srcIn),
+                          ),
                         )
                       : Icon(icon, color: childColor, size: iconSize),
                   const SpaceWidth(15.0),
-                  Text(
-                    title,
-                    textAlign: TextAlign.left,
-                    style: isBlue
-                        ? AppTextStyle.white(
-                            fontSize: fontSize, fontWeight: FontWeight.w700)
-                        : AppTextStyle.blue(
-                            fontSize: fontSize, fontWeight: FontWeight.w700),
+                  Expanded(
+                    flex: 6,
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.left,
+                      style: isBlue
+                          ? AppTextStyle.white(
+                              fontSize: fontSize, fontWeight: FontWeight.w700)
+                          : AppTextStyle.blue(
+                              fontSize: fontSize, fontWeight: FontWeight.w700),
+                    ),
                   ),
                 ],
               )

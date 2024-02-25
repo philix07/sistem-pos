@@ -49,6 +49,15 @@ class AdminPage extends StatelessWidget {
           ),
           const SpaceHeight(10.0),
           AppIconButton(
+            title: "Report",
+            width: double.infinity,
+            isSvg: true,
+            iconPath: 'assets/icons/financial_report.svg',
+            isBlue: true,
+            onTap: () {},
+          ),
+          const SpaceHeight(10.0),
+          AppIconButton(
             title: "Logout",
             width: double.infinity,
             isSvg: true,
@@ -67,7 +76,7 @@ class AdminPage extends StatelessWidget {
               AppDialog.show(
                 context,
                 iconPath: 'assets/icons/error.svg',
-                errorMessage: "Data Not Found",
+                message: "Data Not Found",
               );
             },
           ),

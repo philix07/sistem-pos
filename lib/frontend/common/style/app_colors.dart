@@ -14,4 +14,6 @@ class AppColor {
   static const primary = Color(0xff3949AB);
 
   static const disabled = Color(0xffC8D1E1);
+  
+  static const blue = Color(0xff6FA1FF);
 }

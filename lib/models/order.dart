@@ -50,7 +50,7 @@ class Order {
 
 class OrderItem {
   final Product product;
-  final int quantity;
+  int quantity;
 
   OrderItem({
     required this.product,

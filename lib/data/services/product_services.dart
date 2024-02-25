@@ -24,7 +24,7 @@ class ProductService {
 
       return Right(products);
     } catch (e) {
-      return Left(e.toString());
+      return const Left("Error Fetching Product");
     }
   }
 

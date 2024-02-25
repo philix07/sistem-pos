@@ -6,6 +6,7 @@ import 'package:iconly/iconly.dart';
 import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/presentation/admin/admin_page.dart';
+import 'package:kerja_praktek/frontend/presentation/home/bloc/order/order_bloc.dart';
 import 'package:kerja_praktek/frontend/presentation/home/bloc/product/product_bloc.dart';
 import 'package:kerja_praktek/frontend/presentation/payment/payment_page.dart';
 import 'package:kerja_praktek/frontend/presentation/history/history_page.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => ProductBloc()),
+        BlocProvider(create: (_) => OrderBloc()),
       ],
       child: const MaterialApp(
         home: DashboardPage(),

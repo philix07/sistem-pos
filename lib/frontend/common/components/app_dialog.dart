@@ -8,7 +8,7 @@ class AppDialog {
   static void show(
     BuildContext context, {
     required String iconPath,
-    required String errorMessage,
+    required String message,
     Color contentColor = Colors.redAccent,
     double iconWidth = 70,
     double iconHeight = 70,
@@ -29,7 +29,7 @@ class AppDialog {
             ),
             const SpaceHeight(10.0),
             Text(
-              errorMessage,
+              message,
               style: GoogleFonts.openSans(
                 color: contentColor,
                 fontSize: 14,

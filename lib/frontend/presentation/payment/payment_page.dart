@@ -60,14 +60,14 @@ class _PaymentPageState extends State<PaymentPage> {
           ValueListenableBuilder(
             valueListenable: _buttonIndex,
             builder: (context, value, _) => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppButton(
                   withIcon: true,
                   iconPath: 'assets/icons/trash_can.svg',
                   iconWidth: 25,
                   iconHeight: 25,
-                  width: MediaQuery.of(context).size.width / 2.5,
+                  width: MediaQuery.of(context).size.width / 2.4,
                   height: MediaQuery.of(context).size.height / 8,
                   fontSize: 14.0,
                   title: "Tunai",
@@ -82,7 +82,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   iconPath: 'assets/icons/trash_can.svg',
                   iconWidth: 25,
                   iconHeight: 25,
-                  width: MediaQuery.of(context).size.width / 2.5,
+                  width: MediaQuery.of(context).size.width / 2.4,
                   height: MediaQuery.of(context).size.height / 8,
                   fontSize: 14.0,
                   title: "Transfer",

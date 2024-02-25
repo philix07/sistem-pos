@@ -33,14 +33,14 @@ class _HistoryPageState extends State<HistoryPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 AppButton(
-                  title: "History",
+                  title: "Success",
                   isActive: _buttonIndex.value == 0,
                   onTap: () {
                     onButtonTap(0);
                   },
                 ),
                 AppButton(
-                  title: "Report",
+                  title: "Removed",
                   isActive: _buttonIndex.value == 1,
                   onTap: () {
                     onButtonTap(1);

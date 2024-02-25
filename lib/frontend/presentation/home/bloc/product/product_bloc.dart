@@ -9,7 +9,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ProductRepository repository = ProductRepository();
   List<Product> products = [];
 
-  ProductBloc() : super(ProductInitial()) {
+  ProductBloc() : super(ProductSuccess(products: [])) {
     on<FetchAll>((event, emit) async {
       emit(ProductLoading());
 
@@ -29,6 +29,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         emit(ProductSuccess(products: products));
       } else {
         List<Product> filteredProduct = [];
+
         products.forEach(((e) {
           e.category == event.category ? filteredProduct.add(e) : null;
         }));
@@ -39,6 +40,17 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
     on<SearchProduct>((event, emit) {
       emit(ProductLoading());
+      var keyword = event.keyword.toLowerCase();
+
+      if (keyword == "") {
+        emit(ProductSuccess(products: products));
+      } else {
+        List<Product> filteredProduct = products
+            .where((val) => val.name.toLowerCase().startsWith(keyword))
+            .toList();
+
+        emit(ProductSuccess(products: filteredProduct));
+      }
     });
 
     on<AddProduct>((event, emit) async {

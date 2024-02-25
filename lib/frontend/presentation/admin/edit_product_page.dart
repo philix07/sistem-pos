@@ -5,11 +5,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kerja_praktek/frontend/common/components/app_back_bar.dart';
 import 'package:kerja_praktek/frontend/common/components/app_button.dart';
+import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
 import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/components/app_text_field.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
+import 'package:kerja_praktek/frontend/common/utils/form_validator.dart';
 import 'package:kerja_praktek/frontend/presentation/admin/widget/edit_product_card.dart';
 import 'package:kerja_praktek/models/product.dart';
 
@@ -85,6 +87,8 @@ class _EditProductPageDetailState extends State<EditProductPageDetail> {
               AppTextField(
                 controller: nameController,
                 labelText: "Name",
+                inputFormatter: AppFormValidator().textOnly(),
+                validator: (val) => AppFormValidator().validateNotNull(val),
                 fontSize: 16.0,
               ),
               const SpaceHeight(20.0),
@@ -95,6 +99,8 @@ class _EditProductPageDetailState extends State<EditProductPageDetail> {
               AppTextField(
                 controller: priceController,
                 labelText: "Price",
+                inputFormatter: AppFormValidator().numberOnly(),
+                validator: (val) => AppFormValidator().validateNotNull(val),
                 fontSize: 16.0,
               ),
               const SpaceHeight(30.0),
@@ -205,6 +211,11 @@ class _EditProductPageDetailState extends State<EditProductPageDetail> {
                 child: InkWell(
                   onTap: () {
                     //TODO: Show Confirmation Dialog First
+                    AppDialog.show(
+                      context,
+                      iconPath: 'assets/icons/cancel.svg',
+                      message: "Are you sure you want to delete the product?",
+                    );
                     
                     //TODO: CANCEL ADD PRODUCT
                     Navigator.pop(context);
