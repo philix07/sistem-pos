@@ -10,8 +10,14 @@ final class AddOrder extends OrderEvent {
   AddOrder({required this.product});
 }
 
-final class RemoveOrder extends OrderEvent {
+final class ReduceOrder extends OrderEvent {
   final Product product;
 
-  RemoveOrder({required this.product});
+  ReduceOrder({required this.product});
+}
+
+final class DeleteOrder extends OrderEvent {
+  final Product product;
+
+  DeleteOrder({required this.product});
 }

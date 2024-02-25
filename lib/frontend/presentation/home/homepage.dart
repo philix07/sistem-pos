@@ -10,7 +10,7 @@ import 'package:kerja_praktek/frontend/presentation/home/bloc/product/product_bl
 import 'package:kerja_praktek/models/product.dart';
 import 'package:kerja_praktek/frontend/presentation/home/widgets/category_button.dart';
 import 'package:kerja_praktek/frontend/presentation/home/widgets/product_card.dart';
-import 'package:kerja_praktek/frontend/presentation/home/widgets/product_empty.dart';
+import 'package:kerja_praktek/frontend/presentation/home/widgets/data_empty.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -115,7 +115,11 @@ class _HomePageState extends State<HomePage> {
               } else if (state is ProductSuccess) {
                 var products = state.products;
                 if (products.isEmpty) {
-                  return const Expanded(child: ProductEmpty());
+                  return const Expanded(
+                    child: DataEmpty(
+                      title: "Produk Tidak Ditemukan",
+                    ),
+                  );
                 } else {
                   return Expanded(
                     child: GridView.builder(

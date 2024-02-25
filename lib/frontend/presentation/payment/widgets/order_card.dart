@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
+import 'package:kerja_praktek/frontend/common/utils/formatter.dart';
+import 'package:kerja_praktek/frontend/presentation/home/bloc/order/order_bloc.dart';
+import 'package:kerja_praktek/models/order.dart';
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({super.key});
+  const OrderCard({super.key, required this.order});
+
+  final OrderItem order;
 
   @override
   Widget build(BuildContext context) {
+    int price = order.product.price * order.quantity;
     return Container(
       padding: const EdgeInsets.all(10.0),
       height: MediaQuery.of(context).size.height / 8,
       width: double.maxFinite,
       decoration: BoxDecoration(
         border: Border.all(
-          width: 1.5,
           color: AppColor.primary,
         ),
         borderRadius: const BorderRadius.all(Radius.circular(8.0)),
@@ -25,11 +31,7 @@ class OrderCard extends StatelessWidget {
           CircleAvatar(
             backgroundColor: AppColor.disabled,
             radius: 25.0,
-            child: SvgPicture.asset(
-              'assets/icons/food.svg',
-              width: 20,
-              height: 20,
-            ),
+            backgroundImage: NetworkImage(order.product.image),
           ),
           const SpaceWidth(15.0),
 
@@ -40,16 +42,16 @@ class OrderCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Text(
-                    "Item Name That's Really Really Really Long Really Long Long Long",
-                    maxLines: 2,
-                    style: AppTextStyle.black(
-                      fontSize: 11.0,
-                      fontWeight: FontWeight.w700,
-                    ),
+                Expanded(child: Container()),
+                Text(
+                  order.product.name,
+                  maxLines: 2,
+                  style: AppTextStyle.black(
+                    fontSize: 11.0,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
+                Expanded(child: Container()),
                 const SpaceHeight(5.0),
                 Row(
                   mainAxisSize: MainAxisSize.max,
@@ -57,6 +59,11 @@ class OrderCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     InkWell(
+                      onTap: () {
+                        context
+                            .read<OrderBloc>()
+                            .add(ReduceOrder(product: order.product));
+                      },
                       child: Container(
                         decoration: const BoxDecoration(
                           color: AppColor.primary,
@@ -70,10 +77,15 @@ class OrderCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "qty",
+                      order.quantity.toString(),
                       style: AppTextStyle.black(fontWeight: FontWeight.w700),
                     ),
                     InkWell(
+                      onTap: () {
+                        context
+                            .read<OrderBloc>()
+                            .add(AddOrder(product: order.product));
+                      },
                       child: Container(
                         decoration: const BoxDecoration(
                           color: AppColor.primary,
@@ -101,7 +113,7 @@ class OrderCard extends StatelessWidget {
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    "Rp X.XXX.XXX",
+                    "Rp ${AppFormatter.number(price)}",
                     maxLines: 1,
                     style: AppTextStyle.black(
                       fontSize: 10.0,
@@ -112,7 +124,11 @@ class OrderCard extends StatelessWidget {
                 Container(
                   alignment: Alignment.center,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context
+                          .read<OrderBloc>()
+                          .add(DeleteOrder(product: order.product));
+                    },
                     icon: SvgPicture.asset(
                       'assets/icons/cancel.svg',
                       height: 20,

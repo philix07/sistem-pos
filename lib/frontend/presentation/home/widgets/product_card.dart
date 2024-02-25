@@ -5,6 +5,7 @@ import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
 import 'package:kerja_praktek/frontend/presentation/home/bloc/order/order_bloc.dart';
+import 'package:kerja_praktek/frontend/presentation/home/widgets/data_empty.dart';
 import 'package:kerja_praktek/models/product.dart';
 
 class ProductCard extends StatelessWidget {
@@ -105,31 +106,27 @@ class ProductCard extends StatelessWidget {
             if (state is OrderError) {
               //TODO: Handle Order Error
             } else if (state is OrderSuccess) {
-              if (state.orders.isEmpty) {
-                //TODO: Cart Is Empty
-              } else {
-                //Check For The Product Data
-                state.orders.forEach(((order) {
-                  print(order.product.name);
-                  order.product.id == product.id
-                      ? Container(
-                          alignment: Alignment.topRight,
-                          width: double.maxFinite,
-                          margin: const EdgeInsets.fromLTRB(0, 10, 15, 0),
-                          child: CircleAvatar(
-                            backgroundColor: AppColor.primary,
-                            radius: 15,
-                            child: Text(
-                              order.quantity.toString(),
-                              style: AppTextStyle.white(),
-                            ),
-                          ),
-                        )
-                      : const SizedBox();
-                }));
+              //Check For The Product Data
+              for (var order in state.orders) {
+                if (order.product.id == product.id) {
+                  return Container(
+                    alignment: Alignment.topRight,
+                    width: double.maxFinite,
+                    margin: const EdgeInsets.fromLTRB(0, 10, 15, 0),
+                    child: CircleAvatar(
+                      backgroundColor: AppColor.primary,
+                      radius: 15,
+                      child: Text(
+                        order.quantity.toString(),
+                        style: AppTextStyle.white(),
+                      ),
+                    ),
+                  );
+                }
               }
             }
-            //if state is not detected
+
+            //If The State Is Not Recognized
             return const SizedBox();
           },
         )

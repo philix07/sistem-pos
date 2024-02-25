@@ -4,8 +4,10 @@ import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
 
-class ProductEmpty extends StatelessWidget {
-  const ProductEmpty({super.key});
+class DataEmpty extends StatelessWidget {
+  const DataEmpty({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class ProductEmpty extends StatelessWidget {
           ),
           const SpaceHeight(15.0),
           Text(
-            "Produk Tidak Ditemukan",
+            title,
             style: AppTextStyle.gray(
               fontSize: 18.0,
               fontWeight: FontWeight.w700,
