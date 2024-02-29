@@ -3,11 +3,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kerja_praktek/firebase_options.dart';
 import 'package:iconly/iconly.dart';
+import 'package:kerja_praktek/frontend/blocs/auth/auth_bloc.dart';
+import 'package:kerja_praktek/frontend/blocs/history/history_bloc.dart';
+import 'package:kerja_praktek/frontend/blocs/checkout/checkout_bloc.dart';
+import 'package:kerja_praktek/frontend/blocs/order/order_bloc.dart';
+import 'package:kerja_praktek/frontend/blocs/report/report_bloc.dart';
+import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
 import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/presentation/admin/admin_page.dart';
-import 'package:kerja_praktek/frontend/presentation/home/bloc/order/order_bloc.dart';
-import 'package:kerja_praktek/frontend/presentation/home/bloc/product/product_bloc.dart';
+import 'package:kerja_praktek/frontend/blocs/product/product_bloc.dart';
+import 'package:kerja_praktek/frontend/presentation/auth/auth_page.dart';
 import 'package:kerja_praktek/frontend/presentation/payment/payment_page.dart';
 import 'package:kerja_praktek/frontend/presentation/history/history_page.dart';
 import 'package:kerja_praktek/frontend/presentation/home/homepage.dart';
@@ -31,12 +37,67 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => ProductBloc()),
+        BlocProvider(create: (_) => CheckOutBloc()),
         BlocProvider(create: (_) => OrderBloc()),
+        BlocProvider(create: (_) => HistoryBloc()),
+        BlocProvider(create: (_) => ReportBloc()),
+        BlocProvider(create: (_) => AuthBloc()),
       ],
       child: const MaterialApp(
-        home: DashboardPage(),
+        home: AuthManagerPage(),
         title: "Kerja Praktek",
       ),
+    );
+  }
+}
+
+class AuthManagerPage extends StatelessWidget {
+  const AuthManagerPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is AuthLoggedOut) {
+          return const AuthPage();
+        } else if (state is AuthLoggedIn) {
+          return const DashboardPage();
+        } else if (state is AuthLoading) {
+          AppScaffold(
+            child: Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(),
+              ),
+            ),
+          );
+        } else if (state is AuthError) {
+          Future.delayed(
+            const Duration(milliseconds: 100),
+            () {
+              AppDialog.show(
+                context,
+                iconPath: 'assets/icons/error.svg',
+                message: state.message,
+                customOnBack: true,
+                onBack: () {
+                  Navigator.pop(context);
+                  context.read<AuthBloc>().add(AuthLogOut());
+                },
+              );
+            },
+          );
+        }
+
+        return AppScaffold(
+          child: Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              child: const CircularProgressIndicator(),
+            ),
+          ),
+        );
+      },
     );
   }
 }

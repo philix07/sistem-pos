@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kerja_praktek/frontend/common/components/app_back_bar.dart';
@@ -13,6 +14,7 @@ import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
 import 'package:kerja_praktek/frontend/common/utils/form_validator.dart';
 import 'package:kerja_praktek/frontend/presentation/admin/widget/edit_product_card.dart';
+import 'package:kerja_praktek/frontend/blocs/product/product_bloc.dart';
 import 'package:kerja_praktek/models/product.dart';
 
 class EditProductPage extends StatelessWidget {
@@ -20,22 +22,36 @@ class EditProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Product product = Product(
-      id: 'asd',
-      image: 'assets/icons/food.svg',
-      name: 'Ayam Goreng Yang Sangat Yang Sangat Yang Sangat Yang Sangat',
-      category: ProductCategory.drink,
-      price: 240000,
-      isAvailable: true,
-    );
-
     return AppScaffold(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const AppBackBar(title: "Edit Product"),
-          EditProductCard(
-            product: product,
+          BlocBuilder<ProductBloc, ProductState>(
+            builder: (context, state) {
+              if (state is ProductError) {
+                Future.delayed(
+                  const Duration(seconds: 1),
+                  () => AppDialog.show(
+                    context,
+                    iconPath: 'assets/icons/error.svg',
+                    message: state.message,
+                  ),
+                );
+              } else if (state is ProductSuccess) {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: state.products.length,
+                    itemBuilder: (context, index) {
+                      return EditProductCard(
+                        product: state.products[index],
+                      );
+                    },
+                  ),
+                );
+              }
+              return const SizedBox();
+            },
           ),
         ],
       ),
@@ -53,24 +69,30 @@ class EditProductPageDetail extends StatefulWidget {
 }
 
 class _EditProductPageDetailState extends State<EditProductPageDetail> {
+  late Product product;
+
+  var mainTextStyle = AppTextStyle.black(
+    fontSize: 20.0,
+    fontWeight: FontWeight.w700,
+  );
+
+  File? image;
+  bool isNewProductImage = false;
+  var nameController = TextEditingController();
+  var priceController = TextEditingController();
+  var category = ProductCategory.none.value;
+
   @override
-  Widget build(BuildContext context) {
-    var mainTextStyle = AppTextStyle.black(
-      fontSize: 20.0,
-      fontWeight: FontWeight.w700,
-    );
-
-    var product = widget.product;
-
-    File? image;
-    var nameController = TextEditingController();
-    var priceController = TextEditingController();
-    var selectedCategory = "Makanan";
-
+  void initState() {
+    product = widget.product;
+    category = product.category.value;
     nameController.text = product.name;
     priceController.text = product.price.toString();
-    selectedCategory = product.category.value;
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return AppScaffold(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SingleChildScrollView(
@@ -125,12 +147,15 @@ class _EditProductPageDetailState extends State<EditProductPageDetail> {
                     Container(
                       width: 70,
                       decoration: BoxDecoration(
-                        image: image == null
-                            ? const DecorationImage(
-                                image: AssetImage(
-                                "assets/images/pick-image.png",
-                              ))
-                            : DecorationImage(image: FileImage(image!)),
+                        image: isNewProductImage == true
+                            ? DecorationImage(
+                                fit: BoxFit.fill,
+                                image: FileImage(image!),
+                              )
+                            : DecorationImage(
+                                fit: BoxFit.fill,
+                                image: NetworkImage(product.image),
+                              ),
                       ),
                     ),
                     AppButton(
@@ -145,6 +170,7 @@ class _EditProductPageDetailState extends State<EditProductPageDetail> {
                         if (pickedFile != null) {
                           setState(() {
                             image = File(pickedFile.path);
+                            isNewProductImage = true;
                           });
                         }
                       },
@@ -167,7 +193,7 @@ class _EditProductPageDetailState extends State<EditProductPageDetail> {
                   ),
                 ),
                 child: DropdownButton<String>(
-                  value: selectedCategory,
+                  value: category,
                   padding: const EdgeInsets.fromLTRB(24, 12, 0, 12),
                   isExpanded: true,
                   alignment: AlignmentDirectional.center,
@@ -175,7 +201,7 @@ class _EditProductPageDetailState extends State<EditProductPageDetail> {
                   iconSize: 40,
                   onChanged: (String? newValue) {
                     setState(() {
-                      selectedCategory = newValue!;
+                      category = newValue!;
                     });
                   },
                   items: <String>['Makanan', 'Minuman', 'Snack', 'None'].map(
@@ -200,8 +226,35 @@ class _EditProductPageDetailState extends State<EditProductPageDetail> {
                 isActive: true,
                 width: double.maxFinite,
                 height: 60.0,
-                onTap: () {
+                onTap: () async {
                   //TODO: Update Product
+                  context.read<ProductBloc>().add(ProductUpdate(
+                        isNewImage: isNewProductImage,
+                        product: Product(
+                          id: product.id,
+                          image: isNewProductImage == true
+                              ? image!.path
+                              : product.image,
+                          name: nameController.text,
+                          category: ProductCategory.fromString(category),
+                          price: int.parse(priceController.text),
+                          isAvailable: true,
+                        ),
+                      ));
+
+                  //TODO: There's flaw in this implementation.
+                  // error might occur while updating product
+                  AppDialog.show(
+                    context,
+                    contentColor: AppColor.blue,
+                    iconPath: 'assets/icons/cancel.svg',
+                    message: "Successfully updated product",
+                    customOnBack: true,
+                    onBack: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    },
+                  );
                 },
               ),
               const SpaceHeight(8.0),
@@ -210,15 +263,16 @@ class _EditProductPageDetailState extends State<EditProductPageDetail> {
                 height: 60.0,
                 child: InkWell(
                   onTap: () {
-                    //TODO: Show Confirmation Dialog First
-                    AppDialog.show(
+                    //TODO: Show Confirmation Dialog
+                    AppDialog.showConfirmationDialog(
                       context,
                       iconPath: 'assets/icons/cancel.svg',
-                      message: "Are you sure you want to delete the product?",
+                      message: "Are you sure you want to discard the edit?",
+                      onConfirmation: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
                     );
-                    
-                    //TODO: CANCEL ADD PRODUCT
-                    Navigator.pop(context);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -232,7 +286,7 @@ class _EditProductPageDetailState extends State<EditProductPageDetail> {
                       ),
                       const SpaceWidth(10.0),
                       const Text(
-                        "Cancel",
+                        "Discard Edit",
                         style: TextStyle(
                           color: Colors.red,
                           fontSize: 16.0,

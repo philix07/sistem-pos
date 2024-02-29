@@ -3,15 +3,19 @@ import 'dart:convert';
 
 import 'package:kerja_praktek/models/product.dart';
 
-class Order {
+class OrderModel {
   final String id;
-  final String paymentMethod;
+  final String cashierId;
+  final String cashierName;
+  final PaymentMethod paymentMethod;
   final List<OrderItem> orders;
   final DateTime createdAt;
   final int totalPrice;
 
-  Order({
+  OrderModel({
     required this.id,
+    required this.cashierId,
+    required this.cashierName,
     required this.paymentMethod,
     required this.orders,
     required this.createdAt,
@@ -21,17 +25,21 @@ class Order {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'paymentMethod': paymentMethod,
+      'cashierId': cashierId,
+      'cashierName' : cashierName,
+      'paymentMethod': paymentMethod.value,
       'orders': orders.map((x) => x.toMap()).toList(),
       'createdAt': createdAt,
       'totalPrice': totalPrice,
     };
   }
 
-  factory Order.fromMap(Map<String, dynamic> map) {
-    return Order(
+  factory OrderModel.fromMap(Map<String, dynamic> map) {
+    return OrderModel(
       id: map['id'] as String,
-      paymentMethod: map['paymentMethod'] as String,
+      cashierId: map['cashierId'] as String,
+      cashierName: map['cashierName'] as String,
+      paymentMethod: PaymentMethod.fromString(map['paymentMethod'] as String),
       orders: List<OrderItem>.from(
         (map['orders'] as List<int>).map<OrderItem>(
           (x) => OrderItem.fromMap(x as Map<String, dynamic>),
@@ -44,8 +52,8 @@ class Order {
 
   String toJson() => json.encode(toMap());
 
-  factory Order.fromJson(String source) =>
-      Order.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory OrderModel.fromJson(String source) =>
+      OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class OrderItem {
@@ -75,4 +83,26 @@ class OrderItem {
 
   factory OrderItem.fromJson(String source) =>
       OrderItem.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+enum PaymentMethod {
+  none('None'),
+  cash('Cash'),
+  transfer('Transfer');
+
+  final String value;
+
+  const PaymentMethod(this.value);
+
+  static PaymentMethod fromString(String paymentMethod) {
+    switch (paymentMethod) {
+      case 'Cash':
+        return PaymentMethod.cash;
+      case 'Transfer':
+        return PaymentMethod.transfer;
+      // Add more cases for other categories
+      default:
+        return PaymentMethod.none;
+    }
+  }
 }

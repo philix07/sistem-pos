@@ -8,7 +8,25 @@ class AppFormValidator {
     return value == '' ? 'Cannot Null' : null;
   }
 
+  String? validateEmail(String? value) {
+    if (value == '' || value == null) {
+      return 'Please input your email';
+    } else {
+      return RegExp(
+        r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$',
+      ).hasMatch(value)
+          ? null
+          : 'Invalid email format';
+    }
+  }
+
   TextInputFormatter acceptAll() {
+    return FilteringTextInputFormatter.allow(
+      RegExp(r'.*'),
+    );
+  }
+
+  TextInputFormatter wordAndNumber() {
     return FilteringTextInputFormatter.allow(
       RegExp(r'^[A-Za-z0-9\s]+$'),
     );

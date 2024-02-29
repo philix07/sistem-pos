@@ -18,7 +18,7 @@ class History {
       'id': id,
       'paymentMethod': paymentMethod,
       'totalPayment': totalPayment,
-      'transactionDate': transactionDate.millisecondsSinceEpoch,
+      'transactionDate': transactionDate,
     };
   }
 

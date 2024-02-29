@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:kerja_praktek/data/repository/product_repository.dart';
+import 'package:kerja_praktek/frontend/blocs/product/product_bloc.dart';
 import 'package:kerja_praktek/frontend/common/components/app_back_bar.dart';
 import 'package:kerja_praktek/frontend/common/components/app_button.dart';
 import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
@@ -14,7 +14,6 @@ import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
 import 'package:kerja_praktek/frontend/common/utils/form_validator.dart';
-import 'package:kerja_praktek/frontend/presentation/home/bloc/product/product_bloc.dart';
 import 'package:kerja_praktek/models/product.dart';
 import 'package:uuid/uuid.dart';
 
@@ -34,7 +33,7 @@ class _AddProductPageState extends State<AddProductPage> {
   File? image;
   var nameController = TextEditingController();
   var priceController = TextEditingController();
-  var selectedCategory = "Makanan";
+  var category = "Makanan";
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +141,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     ),
                   ),
                   child: DropdownButton<String>(
-                    value: selectedCategory,
+                    value: category,
                     padding: const EdgeInsets.fromLTRB(24, 12, 0, 12),
                     isExpanded: true,
                     alignment: AlignmentDirectional.center,
@@ -150,7 +149,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     iconSize: 40,
                     onChanged: (String? newValue) {
                       setState(() {
-                        selectedCategory = newValue!;
+                        category = newValue!;
                       });
                     },
                     items: <String>['Makanan', 'Minuman', 'Snack', 'None'].map(
@@ -176,8 +175,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   width: double.maxFinite,
                   height: 60.0,
                   onTap: () async {
-                    //TODO: Add Product To Database
-
+                    // TODO: Add Product To Database
                     // Check For Data Validation
                     if (formValidator.formState.currentState!.validate()) {
                       if (image == null) {
@@ -193,8 +191,7 @@ class _AddProductPageState extends State<AddProductPage> {
                           id: const Uuid().v4(),
                           image: image!.path,
                           name: nameController.text,
-                          category:
-                              ProductCategory.fromString(selectedCategory),
+                          category: ProductCategory.fromString(category),
                           price: int.parse(priceController.text),
                           isAvailable: true,
                         );
@@ -202,11 +199,17 @@ class _AddProductPageState extends State<AddProductPage> {
                         //Add Product To Database
                         productBloc.add(AddProduct(product: product));
 
+                        // This dialog implementation might gives error
                         AppDialog.show(
                           context,
                           contentColor: AppColor.blue,
                           iconPath: 'assets/icons/information.svg',
                           message: 'Successfully Added Product',
+                          customOnBack: true,
+                          onBack: () {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          },
                         );
                       }
                     }

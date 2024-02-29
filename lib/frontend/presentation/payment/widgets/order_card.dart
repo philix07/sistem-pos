@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kerja_praktek/frontend/blocs/checkout/checkout_bloc.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
 import 'package:kerja_praktek/frontend/common/utils/formatter.dart';
-import 'package:kerja_praktek/frontend/presentation/home/bloc/order/order_bloc.dart';
+
 import 'package:kerja_praktek/models/order.dart';
 
 class OrderCard extends StatelessWidget {
@@ -61,8 +62,8 @@ class OrderCard extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         context
-                            .read<OrderBloc>()
-                            .add(ReduceOrder(product: order.product));
+                            .read<CheckOutBloc>()
+                            .add(RemoveCheckOut(product: order.product));
                       },
                       child: Container(
                         decoration: const BoxDecoration(
@@ -83,8 +84,8 @@ class OrderCard extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         context
-                            .read<OrderBloc>()
-                            .add(AddOrder(product: order.product));
+                            .read<CheckOutBloc>()
+                            .add(AddCheckOut(product: order.product));
                       },
                       child: Container(
                         decoration: const BoxDecoration(
@@ -126,8 +127,8 @@ class OrderCard extends StatelessWidget {
                   child: IconButton(
                     onPressed: () {
                       context
-                          .read<OrderBloc>()
-                          .add(DeleteOrder(product: order.product));
+                          .read<CheckOutBloc>()
+                          .add(DeleteCheckOut(product: order.product));
                     },
                     icon: SvgPicture.asset(
                       'assets/icons/cancel.svg',

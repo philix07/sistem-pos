@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kerja_praktek/data/services/product_services.dart';
 import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
 import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/components/search_input.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
-import 'package:kerja_praktek/frontend/common/style/app_style.dart';
-import 'package:kerja_praktek/frontend/presentation/home/bloc/product/product_bloc.dart';
+import 'package:kerja_praktek/frontend/blocs/product/product_bloc.dart';
 import 'package:kerja_praktek/models/product.dart';
 import 'package:kerja_praktek/frontend/presentation/home/widgets/category_button.dart';
 import 'package:kerja_praktek/frontend/presentation/home/widgets/product_card.dart';
@@ -21,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _categoryIndex = ValueNotifier(0);
+  var _productCategory = ProductCategory.none;
 
   @override
   void initState() {
@@ -31,6 +30,7 @@ class _HomePageState extends State<HomePage> {
   void onCategoryTap(int index, {required ProductCategory category}) {
     setState(() {
       _categoryIndex.value = index;
+      _productCategory = category;
     });
 
     context.read<ProductBloc>().add(FetchByCategory(category: category));
@@ -39,7 +39,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var searchController = TextEditingController();
-    // var productBloc = BlocProvider.of<ProductBloc>(context);
 
     return AppScaffold(
       child: Column(
@@ -47,7 +46,9 @@ class _HomePageState extends State<HomePage> {
           SearchInput(
             controller: searchController,
             onChanged: (val) {
-              context.read<ProductBloc>().add(SearchProduct(keyword: val));
+              context
+                  .read<ProductBloc>()
+                  .add(SearchProduct(keyword: val, category: _productCategory));
             },
           ),
           const SpaceHeight(20.0),
@@ -99,19 +100,20 @@ class _HomePageState extends State<HomePage> {
           BlocBuilder<ProductBloc, ProductState>(
             builder: (context, state) {
               if (state is ProductLoading) {
-                return const Expanded(
-                  child: SizedBox(
-                    width: double.maxFinite,
-                    child: CircularProgressIndicator(),
+                return Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: const CircularProgressIndicator(),
                   ),
                 );
               } else if (state is ProductError) {
-                // AppDialog.show(
-                //   context,
-                //   iconPath: 'assets/icons/error.svg',
-                //   errorMessage: state.message,
-                // );
-                print('error ${state.message}');
+                Future.delayed(const Duration(milliseconds: 100), () {
+                  AppDialog.show(
+                    context,
+                    iconPath: 'assets/icons/error.svg',
+                    message: state.message,
+                  );
+                });
               } else if (state is ProductSuccess) {
                 var products = state.products;
                 if (products.isEmpty) {

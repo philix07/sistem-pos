@@ -35,6 +35,7 @@ class AppTextField extends StatelessWidget {
         controller: controller,
         readOnly: readOnly,
         validator: validator,
+        
         inputFormatters: [inputFormatter],
         style: AppTextStyle.black(
           fontSize: fontSize,

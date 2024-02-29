@@ -2,15 +2,15 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:kerja_praktek/models/product.dart';
 import 'package:dartz/dartz.dart';
+import 'package:kerja_praktek/models/product.dart';
 
 class ProductService {
   // RemoteService is a class that is used for interacting with
   // external application, for example "Firebase"
-  final _firestore = FirebaseFirestore.instance;
+
+  final _productRef = FirebaseFirestore.instance.collection('product');
   final _storage = FirebaseStorage.instance;
-  late final CollectionReference _productRef = _firestore.collection('product');
 
   Future<Either<String, List<Product>>> fetchAll() async {
     try {
@@ -51,10 +51,41 @@ class ProductService {
       );
 
       // Upload the data into Cloud Firestore
-      await _productRef.add(finalProduct.toMap());
+      await _productRef.doc(product.id).set(finalProduct.toMap());
+      // await _productRef.add(finalProduct.toMap());
       return "Successfully Added Product";
     } catch (e) {
       return "Failed To Add Product";
+    }
+  }
+
+  Future<Either<String, Product>> updateProduct(
+    Product product,
+    bool isNewImage,
+  ) async {
+    try {
+      String imagePath = product.image;
+      if (isNewImage == true) {
+        // Delete the previous image from Firebase Storage
+        _storage.ref().child('products/${product.image}').delete();
+
+        // Settle the imagePath
+        imagePath = await uploadImage(product.image);
+      }
+
+      Product finalProduct = Product(
+        id: product.id,
+        image: imagePath,
+        name: product.name,
+        category: product.category,
+        price: product.price,
+        isAvailable: product.isAvailable,
+      );
+
+      await _productRef.doc(product.id).update(finalProduct.toMap());
+      return Right(finalProduct);
+    } catch (e) {
+      return Left(e.toString());
     }
   }
 
@@ -71,9 +102,7 @@ class ProductService {
 
       return downloadUrl;
     } catch (e) {
-      throw 'Failed to upload image';
+      throw e.toString();
     }
   }
-
-  Future<void> updateProduct() async {}
 }

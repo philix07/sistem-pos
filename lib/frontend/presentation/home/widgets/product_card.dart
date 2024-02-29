@@ -4,9 +4,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
-import 'package:kerja_praktek/frontend/presentation/home/bloc/order/order_bloc.dart';
 import 'package:kerja_praktek/frontend/presentation/home/widgets/data_empty.dart';
 import 'package:kerja_praktek/models/product.dart';
+
+import '../../../blocs/checkout/checkout_bloc.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -47,15 +48,19 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(child: Container()),
-              Text(
-                product.name,
-                maxLines: 2,
-                textAlign: TextAlign.start,
-                style: AppTextStyle.black(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 10.0,
-                  overflow: TextOverflow.ellipsis,
+              Expanded(
+                child: Container(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    product.name,
+                    maxLines: 3,
+                    textAlign: TextAlign.start,
+                    style: AppTextStyle.black(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 10.0,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
               ),
               Text(
@@ -69,6 +74,26 @@ class ProductCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  InkWell(
+                    onTap: () {
+                      //TODO: Remove Item To Cart
+                      context
+                          .read<CheckOutBloc>()
+                          .add(RemoveCheckOut(product: product));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(6.0),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(9.0)),
+                        color: AppColor.primary,
+                      ),
+                      child: const Icon(
+                        Icons.remove_outlined,
+                        color: Colors.white,
+                        size: 16.0,
+                      ),
+                    ),
+                  ),
                   Flexible(
                     child: Text(
                       "Rp ${product.priceFormat}",
@@ -81,7 +106,9 @@ class ProductCard extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       //TODO: Add Item To Cart
-                      context.read<OrderBloc>().add(AddOrder(product: product));
+                      context
+                          .read<CheckOutBloc>()
+                          .add(AddCheckOut(product: product));
                     },
                     child: Container(
                       padding: const EdgeInsets.all(6.0),
@@ -101,11 +128,11 @@ class ProductCard extends StatelessWidget {
             ],
           ),
         ),
-        BlocBuilder<OrderBloc, OrderState>(
+        BlocBuilder<CheckOutBloc, CheckOutState>(
           builder: (context, state) {
-            if (state is OrderError) {
+            if (state is CheckOutError) {
               //TODO: Handle Order Error
-            } else if (state is OrderSuccess) {
+            } else if (state is CheckOutSuccess) {
               //Check For The Product Data
               for (var order in state.orders) {
                 if (order.product.id == product.id) {
