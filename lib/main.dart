@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kerja_praktek/firebase_options.dart';
 import 'package:iconly/iconly.dart';
 import 'package:kerja_praktek/frontend/blocs/auth/auth_bloc.dart';
@@ -8,9 +9,12 @@ import 'package:kerja_praktek/frontend/blocs/history/history_bloc.dart';
 import 'package:kerja_praktek/frontend/blocs/checkout/checkout_bloc.dart';
 import 'package:kerja_praktek/frontend/blocs/order/order_bloc.dart';
 import 'package:kerja_praktek/frontend/blocs/report/report_bloc.dart';
+import 'package:kerja_praktek/frontend/common/components/app_button.dart';
 import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
 import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
+import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
+import 'package:kerja_praktek/frontend/common/style/app_style.dart';
 import 'package:kerja_praktek/frontend/presentation/admin/admin_page.dart';
 import 'package:kerja_praktek/frontend/blocs/product/product_bloc.dart';
 import 'package:kerja_praktek/frontend/presentation/auth/auth_page.dart';
@@ -51,8 +55,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class AuthManagerPage extends StatelessWidget {
+class AuthManagerPage extends StatefulWidget {
   const AuthManagerPage({super.key});
+
+  @override
+  State<AuthManagerPage> createState() => _AuthManagerPageState();
+}
+
+class _AuthManagerPageState extends State<AuthManagerPage> {
+  @override
+  void initState() {
+    context.read<AuthBloc>().add(AuthInitial());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +77,51 @@ class AuthManagerPage extends StatelessWidget {
           return const AuthPage();
         } else if (state is AuthLoggedIn) {
           return const DashboardPage();
-        } else if (state is AuthLoading) {
-          AppScaffold(
+        } else if (state is AuthNewUser) {
+          return AppScaffold(
             child: Expanded(
               child: Container(
+                padding: const EdgeInsets.all(20.0),
                 alignment: Alignment.center,
-                child: const CircularProgressIndicator(),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/information.svg',
+                      width: 90,
+                      height: 90,
+                      colorFilter: const ColorFilter.mode(
+                        AppColor.primary,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    const SpaceHeight(20.0),
+                    Text(
+                      'Welcome new user, Please wait for the owner to verify your status',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyle.blue(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SpaceHeight(20.0),
+                    AppButton(
+                      title: 'Log Out',
+                      isActive: true,
+                      onTap: () {
+                        context.read<AuthBloc>().add(AuthLogOut());
+                      },
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        } else if (state is AuthLoading) {
+          return const AppScaffold(
+            child: Expanded(
+              child: Center(
+                child: CircularProgressIndicator(),
               ),
             ),
           );

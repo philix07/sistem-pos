@@ -10,7 +10,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   final _orders = <OrderModel>[];
 
   OrderBloc() : super(OrderSuccess(orders: <OrderModel>[])) {
-    on<AddOrder>((event, emit) async {
+    on<OrderAdd>((event, emit) async {
       emit(OrderLoading());
       print('add order accessed');
       var result = await _orderRepository.addOrder(event.order);

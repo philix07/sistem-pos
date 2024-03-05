@@ -1,26 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconly/iconly.dart';
 import 'package:kerja_praktek/frontend/blocs/auth/auth_bloc.dart';
 import 'package:kerja_praktek/frontend/common/components/app_button.dart';
 import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
 import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
-import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
-import 'package:kerja_praktek/frontend/common/style/app_style.dart';
 import 'package:kerja_praktek/frontend/presentation/admin/manage_product_page.dart';
+import 'package:kerja_praktek/frontend/presentation/admin/manage_user_page.dart';
 import 'package:kerja_praktek/frontend/presentation/admin/widget/text_description.dart';
 import 'package:kerja_praktek/models/user.dart';
 
-class AdminPage extends StatelessWidget {
+class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
 
   @override
+  State<AdminPage> createState() => _AdminPageState();
+}
+
+class _AdminPageState extends State<AdminPage> {
+  @override
   Widget build(BuildContext context) {
+    context.read<AuthBloc>().add(AuthFetchLocalUser());
+
     return AppScaffold(
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
-          if (state is AuthLoggedIn) {
+          print("current admin page state $state");
+          if (state is AuthLoading) {
+            print("current admin page state $state");
+            const Expanded(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (state is AuthLoggedIn) {
+            print("current admin page state $state");
             var userRole = state.user.role;
 
             bool canManageUserRole(UserRole role) {
@@ -69,7 +83,14 @@ class AdminPage extends StatelessWidget {
                         svgWidth: 30,
                         iconPath: 'assets/icons/person.svg',
                         isBlue: true,
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ManageUserPage(),
+                            ),
+                          );
+                        },
                       )
                     : const SizedBox(),
                 const SpaceHeight(10.0),
@@ -135,13 +156,10 @@ class AdminPage extends StatelessWidget {
               ],
             );
           }
-          return Container(
-            alignment: Alignment.center,
-            width: double.maxFinite,
-            height: double.maxFinite,
-            child: const SizedBox(
-              child: CircularProgressIndicator(),
-            ),
+
+          //* Try to fetch local user data
+          return const Center(
+            child: CircularProgressIndicator(),
           );
         },
       ),

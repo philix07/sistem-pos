@@ -13,12 +13,10 @@ class AuthService {
     required AppUser user,
   }) async {
     try {
-      print('creating user...');
       await _firebaseAuth.createUserWithEmailAndPassword(
         email: emailController,
         password: passwordController,
       );
-      print('User Created');
 
       // Set the user id to match the firebase auth user id
       var newUser = AppUser(
@@ -26,16 +24,15 @@ class AuthService {
         email: user.email,
         name: user.name,
         role: user.role,
+        createdAt: user.createdAt,
       );
 
-      // TODO: Add User Data Into Collection
       // If There's Error While Inputing Data Into The DB
       // Then Delete The User
       await _userRef.doc(_firebaseAuth.currentUser!.uid).set(newUser.toMap());
 
       return Right(newUser);
     } catch (e) {
-      print(e);
       return const Left('Failed To Register Your Account');
     }
   }
@@ -76,6 +73,49 @@ class AuthService {
       return 'Link Sent';
     } catch (e) {
       return 'Email Not Found';
+    }
+  }
+
+  Future<Either<String, AppUser>> isAuthenticated() async {
+    try {
+      var user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        var result = await _userRef.doc(user.uid).get();
+        return Right(AppUser.fromMap(result.data()!));
+      }
+      return Right(AppUser.dummy());
+    } catch (e) {
+      return const Left('Error While Checking Authentication Status');
+    }
+  }
+
+  Future<Either<String, List<AppUser>>> fetchAllUserData() async {
+    try {
+      var users = <AppUser>[];
+
+      var result = await _userRef.get();
+      result.docs.forEach(((val) {
+        var data = val.data() as Map<String, dynamic>;
+        users.add(AppUser.fromMap(data));
+      }));
+
+      return Right(users);
+    } catch (e) {
+      return const Left('Error While Fetching User Data');
+    }
+  }
+
+  Future<Either<String, String>> updateUserData(
+    String id,
+    UserRole role,
+  ) async {
+    try {
+      await _userRef.doc(id).update({'role': role.value});
+
+      return const Right('Data Successfully Updated');
+    } catch (e) {
+      return const Left('Error While Fetching User Data');
     }
   }
 }

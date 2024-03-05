@@ -197,7 +197,7 @@ class _AddProductPageState extends State<AddProductPage> {
                         );
 
                         //Add Product To Database
-                        productBloc.add(AddProduct(product: product));
+                        productBloc.add(ProductAdd(product: product));
 
                         // This dialog implementation might gives error
                         AppDialog.show(

@@ -24,4 +24,47 @@ class OrderRepository {
     }
     return Right(orderData);
   }
+
+  Future<Either<String, List<OrderModel>>> fetchMonthlyOrder(
+    int year,
+    int month,
+  ) async {
+    var result = await _orderService.fetchMonthlyOrder(year, month);
+
+    bool isError = false;
+    String message = "";
+    List<OrderModel> orders = [];
+
+    result.fold((error) {
+      isError = true;
+      message = error;
+    }, (data) {
+      orders = data;
+    });
+
+    if (isError) {
+      return Left(message);
+    }
+    return Right(orders);
+  }
+
+  Future<Either<String, String>> deleteOrder(
+      String orderId, String deletionReason) async {
+    var result = await _orderService.deleteOrder(orderId, deletionReason);
+
+    bool isError = false;
+    String message = "";
+
+    result.fold((error) {
+      isError = true;
+      message = error;
+    }, (success) {
+      message = success;
+    });
+
+    if (isError) {
+      return Left(message);
+    }
+    return Right(message);
+  }
 }

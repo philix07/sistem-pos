@@ -1,18 +1,21 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class AppUser {
   final String uid;
   final String email;
   final String name;
   final UserRole role;
+  final DateTime createdAt;
 
-  // ... Dan Role Role Lainnya
   AppUser({
     required this.uid,
     required this.email,
     required this.name,
     required this.role,
+    required this.createdAt,
   });
 
   Map<String, dynamic> toMap() {
@@ -21,24 +24,31 @@ class AppUser {
       'email': email,
       'name': name,
       'role': role.value,
+      'createdAt' : createdAt,
     };
   }
 
   factory AppUser.dummy() {
     return AppUser(
-      uid: '1234',
+      uid: 'dummy',
       email: 'abcd@gmail.com',
       name: 'anonymous',
       role: UserRole.none,
+      createdAt: DateTime.now(),
     );
   }
 
   factory AppUser.fromMap(Map<String, dynamic> map) {
+    //* Convert Timestamp to DateTime (Firebase only stores Timestamp)
+    var createdTimestamp = map['createdAt'] as Timestamp;
+    var createdAt = createdTimestamp.toDate();
+    
     return AppUser(
       uid: map['uid'] as String,
       email: map['email'] as String,
       name: map['name'] as String,
       role: UserRole.fromString(map['role']),
+      createdAt: createdAt,
     );
   }
 

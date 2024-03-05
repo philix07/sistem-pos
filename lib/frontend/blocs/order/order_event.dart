@@ -3,8 +3,9 @@ part of 'order_bloc.dart';
 
 sealed class OrderEvent {}
 
-class AddOrder extends OrderEvent {
+class OrderAdd extends OrderEvent {
   OrderModel order;
 
-  AddOrder({required this.order});
+  OrderAdd({required this.order});
 }
+

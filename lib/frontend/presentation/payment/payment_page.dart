@@ -13,6 +13,7 @@ import 'package:kerja_praktek/frontend/common/style/app_style.dart';
 import 'package:kerja_praktek/frontend/common/utils/formatter.dart';
 import 'package:kerja_praktek/frontend/presentation/home/widgets/data_empty.dart';
 import 'package:kerja_praktek/frontend/presentation/payment/widgets/order_card.dart';
+import 'package:kerja_praktek/frontend/presentation/payment/widgets/payment_process_dialog.dart';
 import 'package:kerja_praktek/models/order.dart';
 import 'package:uuid/uuid.dart';
 
@@ -191,22 +192,12 @@ class _PaymentPageState extends State<PaymentPage> {
                                 totalPrice: state.totalPrice,
                               );
 
-                              context
-                                  .read<OrderBloc>()
-                                  .add(AddOrder(order: order));
-
-                              //* Handle Order Success Dialog (Error)
-                              // BlocListener<OrderBloc, OrderState>(
-                              //   listener: (context, state) {
-                              //     if (state is OrderSuccess) {
-                              //       AppDialog.show(
-                              //         context,
-                              //         iconPath: 'assets/icons/information.svg',
-                              //         message: 'Order Successfully Created',
-                              //       );
-                              //     }
-                              //   },
-                              // );
+                              showDialog(
+                                context: context,
+                                builder: (context) => PaymentProcessDialog(
+                                  orderModel: order,
+                                ),
+                              );
                             },
                             child: Row(
                               children: [

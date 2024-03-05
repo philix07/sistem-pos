@@ -7,32 +7,42 @@ class TextDescripton extends StatelessWidget {
     super.key,
     required this.title,
     required this.subtitle,
+    this.fontSize = 16,
+    this.gap = 5.0,
   });
 
   final String title;
   final String subtitle;
+  final double fontSize;
+  final double gap;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: AppTextStyle.blue(
-            fontSize: 16.0,
-            fontWeight: FontWeight.w700,
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            title,
+            style: AppTextStyle.blue(
+              fontSize: fontSize,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
-        const SpaceHeight(5.0),
-        Text(
-          subtitle,
-          style: AppTextStyle.black(
-            fontSize: 16.0,
-            fontWeight: FontWeight.w700,
+        SpaceHeight(gap),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            subtitle,
+            style: AppTextStyle.black(
+              fontSize: fontSize,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
-        const SpaceHeight(5.0),
+        SpaceHeight(gap),
         const Divider(
           height: 1,
           color: Colors.black,

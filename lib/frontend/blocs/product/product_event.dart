@@ -17,10 +17,10 @@ final class SearchProduct extends ProductEvent {
   SearchProduct({required this.keyword, required this.category});
 }
 
-final class AddProduct extends ProductEvent {
+final class ProductAdd extends ProductEvent {
   final Product product;
 
-  AddProduct({required this.product});
+  ProductAdd({required this.product});
 }
 
 final class ProductUpdate extends ProductEvent {

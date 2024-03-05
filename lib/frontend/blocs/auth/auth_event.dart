@@ -23,4 +23,15 @@ class AuthRegister extends AuthEvent {
 
 class AuthLogOut extends AuthEvent {}
 
-class FetchCurrentUserData extends AuthEvent {}
+class AuthInitial extends AuthEvent {}
+
+class AuthFetchAllData extends AuthEvent {}
+
+class AuthFetchLocalUser extends AuthEvent {}
+
+class AuthUpdateUserRole extends AuthEvent {
+  final String uid;
+  final UserRole role;
+
+  AuthUpdateUserRole({required this.role, required this.uid});
+}

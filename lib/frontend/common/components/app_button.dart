@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
@@ -16,6 +17,7 @@ class AppButton extends StatelessWidget {
     this.fontSize = 14.0,
     this.withIcon = false,
     this.isActive = false,
+    this.isRow = false,
     this.iconPath,
   });
 
@@ -25,6 +27,7 @@ class AppButton extends StatelessWidget {
   final double fontSize;
   final bool isActive;
   final bool withIcon;
+  final bool isRow;
   final String? iconPath;
   final double iconWidth;
   final double iconHeight;
@@ -37,6 +40,7 @@ class AppButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         alignment: Alignment.center,
         height: height,
         width: width,
@@ -54,30 +58,58 @@ class AppButton extends StatelessWidget {
           ],
         ),
         child: withIcon
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    iconPath!,
-                    colorFilter: ColorFilter.mode(
-                      contentColor,
-                      BlendMode.srcIn,
-                    ),
-                    width: iconWidth,
-                    height: iconHeight,
-                  ),
-                  const SpaceHeight(5.0),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      title,
-                      style: isActive
-                          ? AppTextStyle.white(fontSize: fontSize)
-                          : AppTextStyle.blue(fontSize: fontSize),
-                    ),
-                  ),
-                ],
-              )
+            ? isRow
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SvgPicture.asset(
+                        iconPath!,
+                        colorFilter: ColorFilter.mode(
+                          contentColor,
+                          BlendMode.srcIn,
+                        ),
+                        width: iconWidth,
+                        height: iconHeight,
+                      ),
+                      const SpaceWidth(10.0),
+                      Expanded(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            title,
+                            style: isActive
+                                ? AppTextStyle.white(fontSize: fontSize)
+                                : AppTextStyle.blue(fontSize: fontSize),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        iconPath!,
+                        colorFilter: ColorFilter.mode(
+                          contentColor,
+                          BlendMode.srcIn,
+                        ),
+                        width: iconWidth,
+                        height: iconHeight,
+                      ),
+                      const SpaceHeight(5.0),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          title,
+                          style: isActive
+                              ? AppTextStyle.white(fontSize: fontSize)
+                              : AppTextStyle.blue(fontSize: fontSize),
+                        ),
+                      ),
+                    ],
+                  )
             : FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(

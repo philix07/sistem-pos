@@ -66,4 +66,66 @@ class AuthRepository {
   Future<String> forgotPassword(String email) async {
     return await _authService.forgotPassword(email);
   }
+
+  Future<Either<String, AppUser>> isAuthenticated() async {
+    var result = await _authService.isAuthenticated();
+
+    var isError = false;
+    var errorMessage = '';
+    var appUser = AppUser.dummy();
+
+    result.fold((error) {
+      isError = true;
+      errorMessage = error;
+    }, (data) {
+      appUser = data;
+    });
+
+    if (isError) {
+      return Left(errorMessage);
+    }
+    return Right(appUser);
+  }
+
+  Future<Either<String, List<AppUser>>> fetchAllUserData() async {
+    var result = await _authService.fetchAllUserData();
+
+    var isError = false;
+    var errorMessage = '';
+    var appUser = <AppUser>[];
+
+    result.fold((error) {
+      isError = true;
+      errorMessage = error;
+    }, (data) {
+      appUser = data;
+    });
+
+    if (isError) {
+      return Left(errorMessage);
+    }
+    return Right(appUser);
+  }
+
+  Future<Either<String, String>> updateUserData({
+    required String id,
+    required UserRole role,
+  }) async {
+    var result = await _authService.updateUserData(id, role);
+
+    var isError = false;
+    var message = '';
+
+    result.fold((error) {
+      isError = true;
+      message = error;
+    }, (data) {
+      message = data;
+    });
+
+    if (isError) {
+      return Left(message);
+    }
+    return Right(message);
+  }
 }
