@@ -11,13 +11,14 @@ class OrderProductList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: (MediaQuery.of(context).size.height / 50 * orders.length),
+      width: double.maxFinite,
+      height: orders.length * 20,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: orders.length,
         itemBuilder: (context, index) => Container(
-          padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 1.0),
-          height: MediaQuery.of(context).size.height / 50,
+          padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+          height: 20,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

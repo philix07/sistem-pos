@@ -7,6 +7,7 @@ import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
+import 'package:kerja_praktek/frontend/presentation/admin/bloc/app_user_bloc.dart';
 import 'package:kerja_praktek/frontend/presentation/admin/widget/text_description.dart';
 import 'package:kerja_praktek/models/user.dart';
 
@@ -162,19 +163,9 @@ class _EditUserRoleDialogState extends State<EditUserRoleDialog> {
               onTap: () => onButtonTap(2),
             ),
             const SpaceHeight(20.0),
-            BlocListener<AuthBloc, AuthState>(
+            BlocListener<AppUserBloc, AppUserState>(
               listener: (context, state) {
-                if (state is AuthLoggedIn) {
-                  Future.delayed(
-                    const Duration(milliseconds: 100),
-                    () => AppDialog.show(
-                      context,
-                      contentColor: AppColor.primary,
-                      iconPath: 'assets/icons/information.svg',
-                      message: 'User Role Successfully Updated',
-                    ),
-                  );
-                } else if (state is AuthError) {
+                if (state is AppUserError) {
                   Future.delayed(
                     const Duration(milliseconds: 100),
                     () => AppDialog.show(
@@ -184,14 +175,29 @@ class _EditUserRoleDialogState extends State<EditUserRoleDialog> {
                       message: state.message,
                     ),
                   );
+                } else if (state is AppUserUpdated) {
+                  Future.delayed(
+                    const Duration(milliseconds: 100),
+                    () => AppDialog.show(
+                      context,
+                      contentColor: AppColor.primary,
+                      iconPath: 'assets/icons/information.svg',
+                      message: 'User Role Successfully Updated',
+                      customOnBack: true,
+                      onBack: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                    ),
+                  );
                 }
               },
               child: AppButton(
                 title: 'Save',
                 onTap: () {
                   context
-                      .read<AuthBloc>()
-                      .add(AuthUpdateUserRole(uid: user.uid, role: role));
+                      .read<AppUserBloc>()
+                      .add(AppUserUpdateRole(uid: user.uid, role: role));
                 },
               ),
             )

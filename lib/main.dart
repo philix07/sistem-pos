@@ -17,6 +17,7 @@ import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
 import 'package:kerja_praktek/frontend/presentation/admin/admin_page.dart';
 import 'package:kerja_praktek/frontend/blocs/product/product_bloc.dart';
+import 'package:kerja_praktek/frontend/presentation/admin/bloc/app_user_bloc.dart';
 import 'package:kerja_praktek/frontend/presentation/auth/auth_page.dart';
 import 'package:kerja_praktek/frontend/presentation/payment/payment_page.dart';
 import 'package:kerja_praktek/frontend/presentation/history/history_page.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => HistoryBloc()),
         BlocProvider(create: (_) => ReportBloc()),
         BlocProvider(create: (_) => AuthBloc()),
+        BlocProvider(create: (_) => AppUserBloc()),
       ],
       child: const MaterialApp(
         home: AuthManagerPage(),

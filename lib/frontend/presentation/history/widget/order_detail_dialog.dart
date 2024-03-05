@@ -26,90 +26,90 @@ class OrderDetailDialog extends StatelessWidget {
 
     return AlertDialog(
       alignment: Alignment.center,
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          //* Name
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              "NAMA KASIR",
-              maxLines: 1,
-              style: mainTextStyle,
+      content: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //* Name
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                "NAMA KASIR",
+                maxLines: 1,
+                style: mainTextStyle,
+              ),
             ),
-          ),
-          Flexible(
-            child: Text(
-              orderModel.cashierName,
-              style: subTextStyle,
+            Flexible(
+              child: Text(
+                orderModel.cashierName,
+                style: subTextStyle,
+              ),
             ),
-          ),
-          const SpaceHeight(5.0),
+            const SpaceHeight(5.0),
 
-          //* Payment Method
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              "METODE PEMBAYARAN",
-              maxLines: 1,
-              style: mainTextStyle,
+            //* Payment Method
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                "METODE PEMBAYARAN",
+                maxLines: 1,
+                style: mainTextStyle,
+              ),
             ),
-          ),
-          Flexible(
-            child: Text(
-              orderModel.paymentMethod.value,
-              style: subTextStyle,
+            Flexible(
+              child: Text(
+                orderModel.paymentMethod.value,
+                style: subTextStyle,
+              ),
             ),
-          ),
-          const SpaceHeight(5.0),
+            const SpaceHeight(5.0),
 
-          //* Total Payment
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              "TOTAL TAGIHAN",
-              maxLines: 1,
-              style: mainTextStyle,
+            //* Total Payment
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                "TOTAL TAGIHAN",
+                maxLines: 1,
+                style: mainTextStyle,
+              ),
             ),
-          ),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              "Rp ${AppFormatter.number(orderModel.totalPrice)}",
-              maxLines: 1,
-              style: subTextStyle,
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                "Rp ${AppFormatter.number(orderModel.totalPrice)}",
+                maxLines: 1,
+                style: subTextStyle,
+              ),
             ),
-          ),
-          const SpaceHeight(5.0),
+            const SpaceHeight(5.0),
 
-          //* Transaction Date
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text("WAKTU TRANSAKSI", maxLines: 1, style: mainTextStyle),
-          ),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              AppFormatter.dateTime(orderModel.createdAt),
-              maxLines: 1,
-              style: subTextStyle,
+            //* Transaction Date
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text("WAKTU TRANSAKSI", maxLines: 1, style: mainTextStyle),
             ),
-          ),
-          const SpaceHeight(5.0),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                AppFormatter.dateTime(orderModel.createdAt),
+                maxLines: 1,
+                style: subTextStyle,
+              ),
+            ),
+            const SpaceHeight(5.0),
 
-          //* Products
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text("PRODUCTS", maxLines: 1, style: mainTextStyle),
-          ),
-          //! This part here is still error fix THIS LATER!!!!
-          Flexible(
-            child: OrderProductList(
+            //* Products
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text("PRODUCTS", maxLines: 1, style: mainTextStyle),
+            ),
+            //! This part here is still error fix THIS LATER!!!!
+            OrderProductList(
               orders: orderModel.orders,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

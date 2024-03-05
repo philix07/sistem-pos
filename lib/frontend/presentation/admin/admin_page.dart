@@ -20,21 +20,16 @@ class AdminPage extends StatefulWidget {
 class _AdminPageState extends State<AdminPage> {
   @override
   Widget build(BuildContext context) {
-    context.read<AuthBloc>().add(AuthFetchLocalUser());
-
     return AppScaffold(
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
-          print("current admin page state $state");
           if (state is AuthLoading) {
-            print("current admin page state $state");
             const Expanded(
               child: Center(
                 child: CircularProgressIndicator(),
               ),
             );
           } else if (state is AuthLoggedIn) {
-            print("current admin page state $state");
             var userRole = state.user.role;
 
             bool canManageUserRole(UserRole role) {
@@ -157,7 +152,6 @@ class _AdminPageState extends State<AdminPage> {
             );
           }
 
-          //* Try to fetch local user data
           return const Center(
             child: CircularProgressIndicator(),
           );

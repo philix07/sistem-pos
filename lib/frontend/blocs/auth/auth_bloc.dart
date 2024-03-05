@@ -26,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthNewUser());
         } else {
           appUser = data;
-          emit(AuthLoggedIn(user: data));
+          emit(AuthLoggedIn(user: appUser));
         }
       });
     });
@@ -80,20 +80,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       });
     });
 
-    on<AuthFetchAllData>((event, emit) async {
-      emit(AuthLoading());
-
-      var result = await _authRepository.fetchAllUserData();
-      result.fold((error) {
-        emit(AuthError(message: error));
-      }, (data) {
-        emit(AuthUserDataFetched(users: data));
-      });
-    });
-
     on<AuthFetchLocalUser>((event, emit) async {
       emit(AuthLoading());
-
+      
       if (appUser.role != UserRole.none) {
         emit(AuthLoggedIn(user: appUser));
       } else {
@@ -101,18 +90,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
-    on<AuthUpdateUserRole>((event, emit) async {
-      emit(AuthLoading());
-
-      var result = await _authRepository.updateUserData(
-        id: event.uid,
-        role: event.role,
-      );
-      result.fold((error) {
-        emit(AuthError(message: error));
-      }, (data) {
-        emit(AuthLoggedIn(user: appUser));
-      });
-    });
+    
   }
 }

@@ -19,9 +19,3 @@ final class AuthError extends AuthState {
 }
 
 final class AuthNewUser extends AuthState {}
-
-final class AuthUserDataFetched extends AuthState {
-  final List<AppUser> users;
-
-  AuthUserDataFetched({required this.users});
-}

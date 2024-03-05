@@ -94,7 +94,13 @@ class AuthService {
     try {
       var users = <AppUser>[];
 
-      var result = await _userRef.get();
+      var result = await _userRef
+          .where(
+            'role',
+            isNotEqualTo: UserRole.owner.value,
+          )
+          .get();
+
       result.docs.forEach(((val) {
         var data = val.data() as Map<String, dynamic>;
         users.add(AppUser.fromMap(data));
