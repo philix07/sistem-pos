@@ -6,6 +6,7 @@ import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
+import 'package:kerja_praktek/frontend/common/utils/form_validator.dart';
 import 'package:kerja_praktek/frontend/common/utils/formatter.dart';
 import 'package:kerja_praktek/frontend/presentation/history/widget/order_detail_dialog.dart';
 import 'package:kerja_praktek/models/order.dart';
@@ -28,6 +29,7 @@ class SuccessHistoryCard extends StatelessWidget {
     );
 
     var textController = TextEditingController();
+    var formValidator = AppFormValidator();
 
     return InkWell(
       onTap: () {
@@ -59,83 +61,100 @@ class SuccessHistoryCard extends StatelessWidget {
               alignment: Alignment.topRight,
               child: InkWell(
                 onTap: () {
-                  //! Ask For Deletion Reason And Then Set
+                  //* Ask For Deletion Reason And Then Set
                   showDialog(
                     context: context,
-                    builder: (context) => AlertDialog(
-                      content: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Deletion Reason',
-                            style: AppTextStyle.blue(fontSize: 18.0),
-                          ),
-                          const SpaceHeight(20.0),
-                          TextField(
-                            controller: textController,
-                            maxLines: null, // Allow unlimited lines
-                            keyboardType: TextInputType.multiline,
-                            decoration: const InputDecoration(
-                              hintText: 'What is your deletion reason?',
-                              border: OutlineInputBorder(),
+                    builder: (context) => Form(
+                      key: formValidator.formState,
+                      child: AlertDialog(
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Deletion Reason',
+                              style: AppTextStyle.blue(fontSize: 18.0),
                             ),
-                          ),
-                          BlocListener<HistoryBloc, HistoryState>(
-                            listener: (context, state) {
-                              if (state is HistorySuccess) {
-                                Future.delayed(
-                                  const Duration(milliseconds: 100),
-                                  () => AppDialog.show(
-                                    context,
-                                    iconPath: 'assets/icons/information.svg',
-                                    message: 'Order Successfully Deleted',
-                                    customOnBack: true,
-                                    onBack: () {
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                );
-                              }
-                            },
-                            child: InkWell(
-                              onTap: () {
-                                context.read<HistoryBloc>().add(HistoryDelete(
-                                      id: orderModel.id,
-                                      deletionReason: textController.text,
-                                    ));
+                            const SpaceHeight(20.0),
+                            TextFormField(
+                              controller: textController,
+                              maxLines: null, // Allow unlimited lines
+                              keyboardType: TextInputType.multiline,
+                              validator: (val) {
+                                if (val == '' || val == null) {
+                                  return "Insert Deletion Reason";
+                                }
+                                return null;
                               },
-                              child: Container(
-                                alignment: Alignment.center,
-                                margin: const EdgeInsets.only(top: 10.0),
-                                height: 45,
-                                width: 90,
-                                decoration: BoxDecoration(
-                                  color: Colors.redAccent,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(4.0),
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(0, 1),
-                                      blurRadius: 5.0,
-                                      blurStyle: BlurStyle.outer,
-                                      spreadRadius: 0,
-                                      color: AppColor.black.withOpacity(0.2),
+                              decoration: const InputDecoration(
+                                hintText: 'What is your deletion reason?',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                            BlocListener<HistoryBloc, HistoryState>(
+                              listener: (context, state) {
+                                if (state is HistorySuccess) {
+                                  Future.delayed(
+                                    const Duration(milliseconds: 100),
+                                    () => AppDialog.show(
+                                      context,
+                                      iconPath:
+                                          'assets/icons/information.svg',
+                                      message: 'Order Successfully Deleted',
+                                      customOnBack: true,
+                                      onBack: () {
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
+                                      },
                                     ),
-                                  ],
-                                ),
-                                child: Text(
-                                  'Delete',
-                                  style: AppTextStyle.white(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w700,
+                                  );
+                                }
+                              },
+                              child: InkWell(
+                                onTap: () {
+                                  if (formValidator.formState.currentState!
+                                      .validate()) {
+                                    context.read<HistoryBloc>().add(
+                                          HistoryDelete(
+                                            id: orderModel.id,
+                                            deletionReason:
+                                                textController.text,
+                                          ),
+                                        );
+                                  }
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  margin: const EdgeInsets.only(top: 10.0),
+                                  height: 45,
+                                  width: 90,
+                                  decoration: BoxDecoration(
+                                    color: Colors.redAccent,
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(4.0),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: const Offset(0, 1),
+                                        blurRadius: 5.0,
+                                        blurStyle: BlurStyle.outer,
+                                        spreadRadius: 0,
+                                        color:
+                                            AppColor.black.withOpacity(0.2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Text(
+                                    'Delete',
+                                    style: AppTextStyle.white(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w700,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -152,9 +171,10 @@ class SuccessHistoryCard extends StatelessWidget {
               ),
             ),
             Column(
-              mainAxisSize: MainAxisSize.max,
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                //* Cashier Name
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
@@ -169,22 +189,9 @@ class SuccessHistoryCard extends StatelessWidget {
                     style: subTextStyle,
                   ),
                 ),
-                const SpaceHeight(10.0),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    "METODE PEMBAYARAN",
-                    maxLines: 1,
-                    style: mainTextStyle,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    orderModel.paymentMethod.value,
-                    style: subTextStyle,
-                  ),
-                ),
-                const SpaceHeight(10.0),
+                const SpaceHeight(5.0),
+    
+                //* Total Price
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
@@ -201,7 +208,9 @@ class SuccessHistoryCard extends StatelessWidget {
                     style: subTextStyle,
                   ),
                 ),
-                const SpaceHeight(10.0),
+                const SpaceHeight(5.0),
+    
+                //* Transaction Date
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text("WAKTU TRANSAKSI",

@@ -6,7 +6,7 @@ final class AuthLoading extends AuthState {}
 
 final class AuthLoggedIn extends AuthState {
   final AppUser user;
-
+  
   AuthLoggedIn({required this.user});
 }
 

@@ -5,19 +5,20 @@ import 'package:kerja_praktek/frontend/common/components/app_button.dart';
 import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
 import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
-import 'package:kerja_praktek/frontend/presentation/admin/manage_product_page.dart';
-import 'package:kerja_praktek/frontend/presentation/admin/manage_user_page.dart';
-import 'package:kerja_praktek/frontend/presentation/admin/widget/text_description.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/pages/manage_printer_page.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/pages/manage_product_page.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/pages/manage_user_page.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/widget/text_description.dart';
 import 'package:kerja_praktek/models/user.dart';
 
-class AdminPage extends StatefulWidget {
-  const AdminPage({super.key});
+class SettingPage extends StatefulWidget {
+  const SettingPage({super.key});
 
   @override
-  State<AdminPage> createState() => _AdminPageState();
+  State<SettingPage> createState() => _SettingPageState();
 }
 
-class _AdminPageState extends State<AdminPage> {
+class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
@@ -114,7 +115,14 @@ class _AdminPageState extends State<AdminPage> {
                         isSvg: true,
                         iconPath: 'assets/icons/print.svg',
                         isBlue: true,
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ManagePrinterPage(),
+                            ),
+                          );
+                        },
                       )
                     : const SizedBox(),
                 const SpaceHeight(10.0),

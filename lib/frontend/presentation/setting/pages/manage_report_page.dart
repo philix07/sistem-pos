@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ManagePrinterPage extends StatelessWidget {
-  const ManagePrinterPage({super.key});
+class ManageReportPage extends StatelessWidget {
+  const ManageReportPage({super.key});
 
   @override
   Widget build(BuildContext context) {

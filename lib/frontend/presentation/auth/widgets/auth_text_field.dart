@@ -53,6 +53,7 @@ class AuthTextField extends StatelessWidget {
             ),
           ),
           prefixIconConstraints: BoxConstraints.loose(const Size(50, 50)),
+          floatingLabelBehavior: FloatingLabelBehavior.never,
           alignLabelWithHint: true,
           label: Text(
             title,

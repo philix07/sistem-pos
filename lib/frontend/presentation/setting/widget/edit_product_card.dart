@@ -5,7 +5,7 @@ import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
-import 'package:kerja_praktek/frontend/presentation/admin/edit_product_page.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/pages/edit_product_page.dart';
 import 'package:kerja_praktek/frontend/blocs/product/product_bloc.dart';
 import 'package:kerja_praktek/models/product.dart';
 

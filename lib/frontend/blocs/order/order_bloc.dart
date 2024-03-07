@@ -12,16 +12,14 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   OrderBloc() : super(OrderSuccess(orders: <OrderModel>[])) {
     on<OrderAdd>((event, emit) async {
       emit(OrderLoading());
-      print('add order accessed');
+
       var result = await _orderRepository.addOrder(event.order);
 
       result.fold((errorMessage) {
         emit(OrderError(message: errorMessage));
-        print('error');
       }, (data) {
         _orders.add(data);
         emit(OrderSuccess(orders: _orders));
-        print('success');
       });
     });
   }

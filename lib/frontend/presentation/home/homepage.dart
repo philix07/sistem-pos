@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kerja_praktek/frontend/blocs/checkout/checkout_bloc.dart';
 import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
 import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/components/search_input.dart';
@@ -24,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     context.read<ProductBloc>().add(FetchAll());
+    context.read<CheckOutBloc>().add(CheckOutStarted());
     super.initState();
   }
 

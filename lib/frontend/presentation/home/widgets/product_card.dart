@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
-import 'package:kerja_praktek/frontend/presentation/home/widgets/data_empty.dart';
 import 'package:kerja_praktek/models/product.dart';
 
 import '../../../blocs/checkout/checkout_bloc.dart';
@@ -19,8 +17,6 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int qty = 1;
-
     return Stack(
       children: [
         Container(
@@ -39,12 +35,17 @@ class ProductCard extends StatelessWidget {
             children: [
               Container(
                 alignment: Alignment.topCenter,
-                child: CircleAvatar(
-                  backgroundColor: AppColor.disabled,
-                  radius: 55.0,
+                child: InkWell(
+                  onTap: () {
+                    //TODO: Display Product Image Preview
+                  },
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage(product.image),
-                    radius: 52.0,
+                    backgroundColor: AppColor.disabled,
+                    radius: 55.0,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(product.image),
+                      radius: 52.0,
+                    ),
                   ),
                 ),
               ),

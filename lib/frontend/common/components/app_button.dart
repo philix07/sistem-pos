@@ -40,7 +40,7 @@ class AppButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
         alignment: Alignment.center,
         height: height,
         width: width,

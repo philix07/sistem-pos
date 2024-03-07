@@ -15,6 +15,7 @@ class AppTextField extends StatelessWidget {
     this.height = 50,
     this.width = double.maxFinite,
     this.fontSize = 14,
+    
   });
 
   final TextEditingController controller;
@@ -35,7 +36,8 @@ class AppTextField extends StatelessWidget {
         controller: controller,
         readOnly: readOnly,
         validator: validator,
-        
+        //TODO: Tambahkan text input formatter
+
         inputFormatters: [inputFormatter],
         style: AppTextStyle.black(
           fontSize: fontSize,

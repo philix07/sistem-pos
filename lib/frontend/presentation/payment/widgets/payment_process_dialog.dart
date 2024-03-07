@@ -9,7 +9,7 @@ import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
 import 'package:kerja_praktek/frontend/common/utils/formatter.dart';
-import 'package:kerja_praktek/frontend/presentation/admin/widget/text_description.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/widget/text_description.dart';
 import 'package:kerja_praktek/main.dart';
 import 'package:kerja_praktek/models/order.dart';
 
@@ -20,7 +20,7 @@ class PaymentProcessDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void saveOrderToDatabase() async {
+    void saveOrderToDatabase() {
       context.read<OrderBloc>().add(OrderAdd(order: orderModel));
     }
 
@@ -30,7 +30,7 @@ class PaymentProcessDialog extends StatelessWidget {
           Container(
             // Provide height to it doesn't take all the available height
             height: 30,
-            alignment: Alignment.topLeft,
+            alignment: Alignment.topRight,
             child: InkWell(
               onTap: () => Navigator.pop(context),
               child: SvgPicture.asset(
@@ -98,15 +98,17 @@ class PaymentProcessDialog extends StatelessWidget {
                       () => AppDialog.show(
                         context,
                         contentColor: AppColor.blue,
-                        iconPath: 'assets/icons/error.svg',
+                        iconPath: 'assets/icons/information.svg',
                         message: 'Order successfully created',
-                      ),
-                    );
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DashboardPage(),
+                        customOnBack: true,
+                        onBack: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DashboardPage(),
+                            ),
+                          );
+                        },
                       ),
                     );
                   } else if (state is OrderError) {
@@ -125,6 +127,7 @@ class PaymentProcessDialog extends StatelessWidget {
                   children: [
                     AppButton(
                       title: 'Simpan',
+                      width: MediaQuery.of(context).size.width / 3,
                       isActive: true,
                       onTap: () {
                         saveOrderToDatabase();
@@ -132,6 +135,7 @@ class PaymentProcessDialog extends StatelessWidget {
                     ),
                     AppButton(
                       title: 'Print',
+                      width: MediaQuery.of(context).size.width / 3.5,
                       isRow: true,
                       withIcon: true,
                       iconPath: 'assets/icons/print.svg',

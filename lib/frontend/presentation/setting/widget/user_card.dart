@@ -7,8 +7,8 @@ import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
-import 'package:kerja_praktek/frontend/presentation/admin/bloc/app_user_bloc.dart';
-import 'package:kerja_praktek/frontend/presentation/admin/widget/text_description.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/bloc/app_user_bloc.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/widget/text_description.dart';
 import 'package:kerja_praktek/models/user.dart';
 
 class UserCard extends StatelessWidget {

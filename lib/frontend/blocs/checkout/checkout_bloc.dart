@@ -72,7 +72,8 @@ class CheckOutBloc extends Bloc<CheckOutEvent, CheckOutState> {
     on<ClearCheckOut>((event, emit) {
       // Clear the order cart
       orders = <OrderItem>[];
-      emit(CheckOutSuccess(orders: [], totalPrice: 0));
+      totalPrice = 0;
+      emit(CheckOutSuccess(orders: orders, totalPrice: 0));
     });
   }
 }

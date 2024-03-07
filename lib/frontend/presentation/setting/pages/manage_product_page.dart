@@ -3,8 +3,8 @@ import 'package:kerja_praktek/frontend/common/components/app_back_bar.dart';
 import 'package:kerja_praktek/frontend/common/components/app_button.dart';
 import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
-import 'package:kerja_praktek/frontend/presentation/admin/add_product_page.dart';
-import 'package:kerja_praktek/frontend/presentation/admin/edit_product_page.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/pages/add_product_page.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/pages/edit_product_page.dart';
 
 class ManageProductPage extends StatelessWidget {
   const ManageProductPage({super.key});

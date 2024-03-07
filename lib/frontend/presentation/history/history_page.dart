@@ -4,6 +4,8 @@ import 'package:kerja_praktek/frontend/blocs/history/history_bloc.dart';
 import 'package:kerja_praktek/frontend/common/components/app_button.dart';
 import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
+import 'package:kerja_praktek/frontend/common/style/app_style.dart';
+import 'package:kerja_praktek/frontend/common/utils/form_validator.dart';
 import 'package:kerja_praktek/frontend/presentation/history/removed_history_page.dart';
 import 'package:kerja_praktek/frontend/presentation/history/success_history_page.dart';
 

@@ -46,20 +46,29 @@ class _SignUpPageState extends State<SignUpPage> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    'Create Account',
+                    'Create New Account',
                     style: AppTextStyle.blue(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
-                    'Create new account',
-                    style: AppTextStyle.gray(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
                   const SpaceHeight(20.0),
+                  AuthTextField(
+                    title: 'USERNAME',
+                    iconPath: 'assets/icons/person.svg',
+                    inputFormatters: AppFormValidator().textOnly(),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your name';
+                      }
+                      return null;
+                    },
+                    controller: usernameController,
+                  ),
+                  const Divider(
+                    thickness: 1,
+                    color: AppColor.black,
+                  ),
                   AuthTextField(
                     title: 'EMAIL',
                     iconPath: 'assets/icons/email.svg',
@@ -84,26 +93,10 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: passwordController,
                     obscureText: true,
                   ),
-                  const Divider(
-                    thickness: 1,
-                    color: AppColor.black,
-                  ),
-                  AuthTextField(
-                    title: 'USERNAME',
-                    iconPath: 'assets/icons/person.svg',
-                    inputFormatters: AppFormValidator().textOnly(),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your name';
-                      }
-                      return null;
-                    },
-                    controller: usernameController,
-                  ),
                   const SpaceHeight(20.0),
                   AppButton(
                     width: double.maxFinite,
-                    title: "CREATE AN ACCOUNT",
+                    title: "REGISTER",
                     isActive: true,
                     onTap: () async {
                       //TODO: Validate Input And Trigger Login Event

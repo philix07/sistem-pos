@@ -52,6 +52,14 @@ class OrderCard extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
+                Text(
+                  "Satuan Rp ${AppFormatter.number(order.product.price)}",
+                  maxLines: 1,
+                  style: AppTextStyle.black(
+                    fontSize: 10.0,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
                 Expanded(child: Container()),
                 const SpaceHeight(5.0),
                 Row(

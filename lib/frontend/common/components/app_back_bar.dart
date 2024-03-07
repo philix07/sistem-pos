@@ -17,12 +17,15 @@ class AppBackBar extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 15.0),
       child: Row(
         children: [
-          InkWell(
-            onTap: () => Navigator.pop(context),
-            child: const Icon(
-              Icons.arrow_back_ios_new_rounded,
-              size: 20,
-              color: AppColor.primary,
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0),
+            child: InkWell(
+              onTap: () => Navigator.pop(context),
+              child: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                size: 20,
+                color: AppColor.primary,
+              ),
             ),
           ),
           Expanded(

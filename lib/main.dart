@@ -15,9 +15,9 @@ import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
-import 'package:kerja_praktek/frontend/presentation/admin/admin_page.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/admin_page.dart';
 import 'package:kerja_praktek/frontend/blocs/product/product_bloc.dart';
-import 'package:kerja_praktek/frontend/presentation/admin/bloc/app_user_bloc.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/bloc/app_user_bloc.dart';
 import 'package:kerja_praktek/frontend/presentation/auth/auth_page.dart';
 import 'package:kerja_praktek/frontend/presentation/payment/payment_page.dart';
 import 'package:kerja_praktek/frontend/presentation/history/history_page.dart';
@@ -172,7 +172,7 @@ class _DashboardPageState extends State<DashboardPage> {
     const HomePage(),
     const PaymentPage(),
     const HistoryPage(),
-    const AdminPage(),
+    const SettingPage(),
   ];
 
   void swapPages(int index) {
@@ -223,8 +223,8 @@ class _DashboardPageState extends State<DashboardPage> {
               onTap: () => swapPages(2),
             ),
             NavItem(
-              icon: IconlyLight.profile,
-              label: "Admin",
+              icon: IconlyLight.setting,
+              label: "Setting",
               isActive: _index == 3,
               onTap: () => swapPages(3),
             ),

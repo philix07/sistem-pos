@@ -21,13 +21,8 @@ class SuccessHistoryPage extends StatelessWidget {
             return const HistoryEmptyCard();
           } else {
             return Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 0.9,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12.0,
-                  mainAxisSpacing: 12.0,
-                ),
+              child: ListView.builder(
+                shrinkWrap: true,
                 itemCount: successOrder.length,
                 itemBuilder: (context, index) => SuccessHistoryCard(
                   orderModel: successOrder[index],

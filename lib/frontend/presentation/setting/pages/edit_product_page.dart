@@ -13,7 +13,7 @@ import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
 import 'package:kerja_praktek/frontend/common/utils/form_validator.dart';
-import 'package:kerja_praktek/frontend/presentation/admin/widget/edit_product_card.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/widget/edit_product_card.dart';
 import 'package:kerja_praktek/frontend/blocs/product/product_bloc.dart';
 import 'package:kerja_praktek/models/product.dart';
 
@@ -247,7 +247,7 @@ class _EditProductPageDetailState extends State<EditProductPageDetail> {
                   AppDialog.show(
                     context,
                     contentColor: AppColor.blue,
-                    iconPath: 'assets/icons/cancel.svg',
+                    iconPath: 'assets/icons/information.svg',
                     message: "Successfully updated product",
                     customOnBack: true,
                     onBack: () {
