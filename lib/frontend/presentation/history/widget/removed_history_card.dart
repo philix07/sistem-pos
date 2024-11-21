@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
-import 'package:kerja_praktek/frontend/common/utils/formatter.dart';
+import 'package:kerja_praktek/frontend/common/utils/app_formatter.dart';
 import 'package:kerja_praktek/frontend/presentation/history/widget/order_product_list.dart';
 import 'package:kerja_praktek/models/order.dart';
 

@@ -5,9 +5,10 @@ import 'package:kerja_praktek/frontend/common/components/app_button.dart';
 import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
 import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
-import 'package:kerja_praktek/frontend/presentation/setting/pages/manage_printer_page.dart';
-import 'package:kerja_praktek/frontend/presentation/setting/pages/manage_product_page.dart';
-import 'package:kerja_praktek/frontend/presentation/setting/pages/manage_user_page.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/pages/manage_product/manage_product_page.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/pages/manage_printer/manage_printer_page.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/pages/manage_report/manage_report_page.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/pages/manage_user/manage_user_page.dart';
 import 'package:kerja_praktek/frontend/presentation/setting/widget/text_description.dart';
 import 'package:kerja_praktek/models/user.dart';
 
@@ -22,6 +23,8 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+      withAppBar: true,
+      appBarTitle: 'Profile and Settings ',
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is AuthLoading) {
@@ -48,7 +51,7 @@ class _SettingPageState extends State<SettingPage> {
             }
 
             bool canManagePrinter(UserRole role) {
-              if (role == UserRole.none || role == UserRole.cashier) {
+              if (role == UserRole.none) {
                 return false;
               }
               return true;
@@ -133,7 +136,14 @@ class _SettingPageState extends State<SettingPage> {
                         isSvg: true,
                         iconPath: 'assets/icons/financial_report.svg',
                         isBlue: true,
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ManageReportPage(),
+                            ),
+                          );
+                        },
                       )
                     : const SizedBox(),
                 const SpaceHeight(10.0),

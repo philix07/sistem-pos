@@ -5,7 +5,8 @@ import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
-import 'package:kerja_praktek/frontend/presentation/setting/pages/edit_product_page.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/pages/manage_product/edit_product_page.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/pages/manage_product/manage_product_page.dart';
 import 'package:kerja_praktek/frontend/blocs/product/product_bloc.dart';
 import 'package:kerja_praktek/models/product.dart';
 
@@ -26,7 +27,7 @@ class EditProductCard extends StatelessWidget {
       width: double.maxFinite,
       decoration: BoxDecoration(
         border: Border.all(
-          width: 1.5,
+          // width: 1,
           color: AppColor.primary,
         ),
         borderRadius: const BorderRadius.all(Radius.circular(8.0)),
@@ -40,7 +41,7 @@ class EditProductCard extends StatelessWidget {
           ),
           const SpaceWidth(15.0),
 
-          //Column That Handle Item Name And Buttons
+          //Container That Handle Item Name
           Expanded(
             flex: 2,
             child: Text(
@@ -73,7 +74,7 @@ class EditProductCard extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EditProductPageDetail(
+                            builder: (context) => EditProductPage(
                               product: product,
                             ),
                           ),

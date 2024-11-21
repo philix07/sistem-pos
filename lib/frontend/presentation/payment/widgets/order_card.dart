@@ -5,7 +5,7 @@ import 'package:kerja_praktek/frontend/blocs/checkout/checkout_bloc.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
-import 'package:kerja_praktek/frontend/common/utils/formatter.dart';
+import 'package:kerja_praktek/frontend/common/utils/app_formatter.dart';
 
 import 'package:kerja_praktek/models/order.dart';
 

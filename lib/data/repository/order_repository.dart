@@ -25,7 +25,27 @@ class OrderRepository {
     return Right(orderData);
   }
 
-  Future<Either<String, List<OrderModel>>> fetchMonthlyOrder(
+  Future<Either<String, String>> deleteOrder(
+      String orderId, String deletionReason) async {
+    var result = await _orderService.deleteOrder(orderId, deletionReason);
+
+    bool isError = false;
+    String message = "";
+
+    result.fold((error) {
+      isError = true;
+      message = error;
+    }, (success) {
+      message = success;
+    });
+
+    if (isError) {
+      return Left(message);
+    }
+    return Right(message);
+  }
+
+   Future<Either<String, List<OrderModel>>> fetchMonthlyOrder(
     int year,
     int month,
   ) async {
@@ -48,23 +68,26 @@ class OrderRepository {
     return Right(orders);
   }
 
-  Future<Either<String, String>> deleteOrder(
-      String orderId, String deletionReason) async {
-    var result = await _orderService.deleteOrder(orderId, deletionReason);
+   Future<Either<String, List<OrderModel>>> fetchCustomOrder(
+    DateTime startDate,
+    DateTime endDate,
+  ) async {
+    var result = await _orderService.fetchCustomOrder(startDate, endDate);
 
     bool isError = false;
     String message = "";
+    List<OrderModel> orders = [];
 
     result.fold((error) {
       isError = true;
       message = error;
-    }, (success) {
-      message = success;
+    }, (data) {
+      orders = data;
     });
 
     if (isError) {
       return Left(message);
     }
-    return Right(message);
+    return Right(orders);
   }
 }

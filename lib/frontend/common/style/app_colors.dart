@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColor {
+
   static const font = Color(0xff333333);
 
   static const background = Color(0xffF5F5F5);
@@ -16,4 +17,5 @@ class AppColor {
   static const disabled = Color(0xffC8D1E1);
   
   static const blue = Color(0xff6FA1FF);
+  
 }

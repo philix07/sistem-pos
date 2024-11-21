@@ -20,26 +20,11 @@ class RemovedHistoryPage extends StatelessWidget {
           if (removedOrder.isEmpty) {
             return const HistoryEmptyCard();
           } else {
-            return Expanded(
-              // child: GridView.builder(
-              //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //     childAspectRatio: 0.9,
-              //     crossAxisCount: 2,
-              //     crossAxisSpacing: 12.0,
-              //     mainAxisSpacing: 12.0,
-              //   ),
-              //   itemCount: removedOrder.length,
-              //   itemBuilder: (context, index) => RemovedHistoryCard(
-              //     orderModel: removedOrder[index],
-              //   ),
-              // ),
-              //! Try to use ListView
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: removedOrder.length,
-                itemBuilder: (context, index) => RemovedHistoryCard(
-                  orderModel: removedOrder[index],
-                ),
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: removedOrder.length,
+              itemBuilder: (context, index) => RemovedHistoryCard(
+                orderModel: removedOrder[index],
               ),
             );
           }
@@ -53,11 +38,9 @@ class RemovedHistoryPage extends StatelessWidget {
             ),
           );
         }
-        return Expanded(
-          child: Container(
-            alignment: Alignment.center,
-            child: const CircularProgressIndicator(),
-          ),
+        return Container(
+          alignment: Alignment.center,
+          child: const CircularProgressIndicator(),
         );
       },
     );

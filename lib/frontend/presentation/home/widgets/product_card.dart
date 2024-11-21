@@ -38,6 +38,28 @@ class ProductCard extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     //TODO: Display Product Image Preview
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SpaceHeight(20.0),
+                            Image(
+                              image: NetworkImage(product.image),
+                            ),
+                            const SpaceHeight(15.0),
+                            Text(
+                              product.name,
+                              style: AppTextStyle.black(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
                   },
                   child: CircleAvatar(
                     backgroundColor: AppColor.disabled,
@@ -125,7 +147,7 @@ class ProductCard extends StatelessWidget {
                     ),
                   )
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -157,7 +179,21 @@ class ProductCard extends StatelessWidget {
             //If The State Is Not Recognized
             return const SizedBox();
           },
-        )
+        ),
+        //* If the product is not available
+        if (product.isAvailable == false)
+          Container(
+            width: MediaQuery.of(context).size.width / 2.4,
+            height: MediaQuery.of(context).size.height / 3.3,
+            padding: const EdgeInsets.all(16.0),
+            decoration: ShapeDecoration(
+              color: AppColor.card.withOpacity(0.7),
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(width: 1, color: AppColor.card),
+                borderRadius: BorderRadius.circular(19),
+              ),
+            ),
+          ),
       ],
     );
   }

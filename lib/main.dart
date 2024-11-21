@@ -15,7 +15,7 @@ import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
-import 'package:kerja_praktek/frontend/presentation/setting/admin_page.dart';
+import 'package:kerja_praktek/frontend/presentation/setting/setting_page.dart';
 import 'package:kerja_praktek/frontend/blocs/product/product_bloc.dart';
 import 'package:kerja_praktek/frontend/presentation/setting/bloc/app_user_bloc.dart';
 import 'package:kerja_praktek/frontend/presentation/auth/auth_page.dart';
@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => AppUserBloc()),
       ],
       child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: AuthManagerPage(),
         title: "Kerja Praktek",
       ),
@@ -81,50 +82,46 @@ class _AuthManagerPageState extends State<AuthManagerPage> {
           return const DashboardPage();
         } else if (state is AuthNewUser) {
           return AppScaffold(
-            child: Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(20.0),
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/information.svg',
-                      width: 90,
-                      height: 90,
-                      colorFilter: const ColorFilter.mode(
-                        AppColor.primary,
-                        BlendMode.srcIn,
-                      ),
+            child: Container(
+              padding: const EdgeInsets.all(20.0),
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/information.svg',
+                    width: 90,
+                    height: 90,
+                    colorFilter: const ColorFilter.mode(
+                      AppColor.primary,
+                      BlendMode.srcIn,
                     ),
-                    const SpaceHeight(20.0),
-                    Text(
-                      'Welcome new user, Please wait for the owner to verify your status',
-                      textAlign: TextAlign.center,
-                      style: AppTextStyle.blue(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w700,
-                      ),
+                  ),
+                  const SpaceHeight(20.0),
+                  Text(
+                    'Welcome new user, Please wait for the owner to verify your status',
+                    textAlign: TextAlign.center,
+                    style: AppTextStyle.blue(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w700,
                     ),
-                    const SpaceHeight(20.0),
-                    AppButton(
-                      title: 'Log Out',
-                      isActive: true,
-                      onTap: () {
-                        context.read<AuthBloc>().add(AuthLogOut());
-                      },
-                    )
-                  ],
-                ),
+                  ),
+                  const SpaceHeight(20.0),
+                  AppButton(
+                    title: 'Log Out',
+                    isActive: true,
+                    onTap: () {
+                      context.read<AuthBloc>().add(AuthLogOut());
+                    },
+                  )
+                ],
               ),
             ),
           );
         } else if (state is AuthLoading) {
           return const AppScaffold(
-            child: Expanded(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
+            child: Center(
+              child: CircularProgressIndicator(),
             ),
           );
         } else if (state is AuthError) {
@@ -146,11 +143,9 @@ class _AuthManagerPageState extends State<AuthManagerPage> {
         }
 
         return AppScaffold(
-          child: Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              child: const CircularProgressIndicator(),
-            ),
+          child: Container(
+            alignment: Alignment.center,
+            child: const CircularProgressIndicator(),
           ),
         );
       },
@@ -166,6 +161,12 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  @override
+  void initState() {
+    context.read<ProductBloc>().add(FetchAll());
+    super.initState();
+  }
+
   int _index = 0;
 
   final List<Widget> _pages = [

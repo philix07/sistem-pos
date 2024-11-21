@@ -41,6 +41,8 @@ class _AddProductPageState extends State<AddProductPage> {
     var formValidator = AppFormValidator();
 
     return AppScaffold(
+      withAppBar: true,
+      appBarTitle: 'Add Product',
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SingleChildScrollView(
         child: Form(
@@ -50,7 +52,7 @@ class _AddProductPageState extends State<AddProductPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const AppBackBar(title: "Add Product"),
+                const SpaceHeight(10.0),
                 Text(
                   "Product Name",
                   style: mainTextStyle,
@@ -194,6 +196,7 @@ class _AddProductPageState extends State<AddProductPage> {
                           category: ProductCategory.fromString(category),
                           price: int.parse(priceController.text),
                           isAvailable: true,
+                          isBestSeller: false,
                         );
 
                         //Add Product To Database

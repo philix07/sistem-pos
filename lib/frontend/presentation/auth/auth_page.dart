@@ -46,7 +46,7 @@ class _AuthPageState extends State<AuthPage> {
                 children: [
                   const CircleAvatar(
                     radius: 55.0,
-                    backgroundImage: AssetImage('assets/images/logo.png'),
+                    backgroundImage: AssetImage('assets/images/logo_apk_2.png'),
                   ),
                   const SpaceHeight(20.0),
                   AuthTextField(

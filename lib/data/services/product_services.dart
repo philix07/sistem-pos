@@ -48,6 +48,7 @@ class ProductService {
         category: product.category,
         price: product.price,
         isAvailable: product.isAvailable,
+        isBestSeller: product.isBestSeller,
       );
 
       // Upload the data into Cloud Firestore
@@ -80,6 +81,7 @@ class ProductService {
         category: product.category,
         price: product.price,
         isAvailable: product.isAvailable,
+        isBestSeller: product.isBestSeller,
       );
 
       await _productRef.doc(product.id).update(finalProduct.toMap());

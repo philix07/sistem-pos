@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:kerja_praktek/frontend/common/utils/formatter.dart';
+import 'package:kerja_praktek/frontend/common/utils/app_formatter.dart';
 
 class Product {
   final String id;
@@ -9,6 +9,7 @@ class Product {
   final String name;
   final int price;
   final bool isAvailable;
+  final bool isBestSeller;
   final ProductCategory category;
 
   Product({
@@ -18,6 +19,7 @@ class Product {
     required this.category,
     required this.price,
     required this.isAvailable,
+    required this.isBestSeller,
   });
 
   String get priceFormat => AppFormatter.number(price);
@@ -30,6 +32,7 @@ class Product {
       'category': category.value,
       'price': price,
       'isAvailable': isAvailable,
+      'isBestSeller' : isBestSeller,
     };
   }
 
@@ -41,6 +44,7 @@ class Product {
       category: ProductCategory.fromString(map['category']),
       price: map['price'] as int,
       isAvailable: map['isAvailable'] as bool,
+      isBestSeller: map['isBestSeller'] as bool,
     );
   }
 

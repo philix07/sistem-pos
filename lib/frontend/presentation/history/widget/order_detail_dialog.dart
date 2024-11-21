@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:kerja_praktek/frontend/common/components/app_button.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
-import 'package:kerja_praktek/frontend/common/utils/formatter.dart';
+import 'package:kerja_praktek/frontend/common/utils/app_formatter.dart';
+import 'package:kerja_praktek/frontend/common/utils/app_printer.dart';
 import 'package:kerja_praktek/frontend/presentation/history/widget/order_product_list.dart';
 import 'package:kerja_praktek/models/order.dart';
 
@@ -15,6 +17,8 @@ class OrderDetailDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var appPrinter = AppPrinter();
+
     var mainTextStyle = AppTextStyle.blue(
       fontSize: 10.0,
       fontWeight: FontWeight.w700,
@@ -127,6 +131,23 @@ class OrderDetailDialog extends StatelessWidget {
               ),
               OrderProductList(
                 orders: orderModel.orders,
+              ),
+
+              //* Print The Bill
+              const SpaceHeight(8.0),
+              Center(
+                child: AppButton(
+                  title: 'Print Receipt',
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  isRow: true,
+                  withIcon: true,
+                  iconPath: 'assets/icons/print.svg',
+                  isActive: true,
+                  onTap: () {
+                    //! Print The Receipt
+                    appPrinter.print(orderModel);
+                  },
+                ),
               ),
             ],
           ),

@@ -11,7 +11,7 @@ class CheckOutBloc extends Bloc<CheckOutEvent, CheckOutState> {
 
   CheckOutBloc() : super(CheckOutSuccess(orders: [], totalPrice: 0)) {
     on<CheckOutStarted>((event, emit) {
-      emit(CheckOutSuccess(orders: [], totalPrice: 0));
+      emit(CheckOutSuccess(orders: orders, totalPrice: totalPrice));
     });
 
     on<AddCheckOut>((event, emit) {

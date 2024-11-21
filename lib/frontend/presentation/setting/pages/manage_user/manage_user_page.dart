@@ -30,6 +30,8 @@ class _ManageUserPageState extends State<ManageUserPage> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+      withAppBar: true,
+      appBarTitle: 'Manage User Data',
       padding: const EdgeInsets.all(10.0),
       child: BlocBuilder<AppUserBloc, AppUserState>(
         builder: (context, state) {
@@ -51,7 +53,7 @@ class _ManageUserPageState extends State<ManageUserPage> {
           } else if (state is AppUserDataFetched) {
             return Column(
               children: [
-                const AppBackBar(title: 'Manajemen Data Karyawan'),
+                const SpaceHeight(10.0),
                 Expanded(
                   child: ListView.builder(
                     itemCount: state.users.length,

@@ -14,7 +14,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       emit(ProductLoading());
 
       var result = await repository.fetchAll();
-      result.fold((error) {
+      result.fold((error) { 
         emit(ProductError(message: error));
       }, (data) {
         products = data;
@@ -91,6 +91,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           category: data.category,
           price: data.price,
           isAvailable: data.isAvailable,
+          isBestSeller: data.isBestSeller,
         );
 
         emit(ProductSuccess(products: products));

@@ -24,7 +24,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    context.read<ProductBloc>().add(FetchAll());
     context.read<CheckOutBloc>().add(CheckOutStarted());
     super.initState();
   }
@@ -125,6 +124,28 @@ class _HomePageState extends State<HomePage> {
                     ),
                   );
                 } else {
+                  List<Product> availableProduct = [];
+                  List<Product> unAvailableProduct = [];
+                  List<Product> sortedProducts = [];
+
+                  products.forEach(((product) {
+                    if (product.isAvailable) {
+                      availableProduct.add(product);
+                    } else {
+                      unAvailableProduct.add(product);
+                    }
+                  }));
+
+                  availableProduct.sort((a, b) {
+                    var aValue = a.isBestSeller ? 1 : 0;
+                    var bValue = b.isBestSeller ? 1 : 0;
+
+                    return bValue.compareTo(aValue);
+                  });
+
+                  sortedProducts.addAll(availableProduct);
+                  sortedProducts.addAll(unAvailableProduct);
+
                   return Expanded(
                     child: GridView.builder(
                       gridDelegate:
@@ -134,9 +155,9 @@ class _HomePageState extends State<HomePage> {
                         crossAxisSpacing: 16.0,
                         mainAxisSpacing: 16.0,
                       ),
-                      itemCount: products.length,
+                      itemCount: sortedProducts.length,
                       itemBuilder: (context, index) => ProductCard(
-                        product: products[index],
+                        product: sortedProducts[index],
                       ),
                     ),
                   );

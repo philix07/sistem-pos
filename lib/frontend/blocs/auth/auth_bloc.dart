@@ -80,16 +80,5 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       });
     });
 
-    on<AuthFetchLocalUser>((event, emit) async {
-      emit(AuthLoading());
-      
-      if (appUser.role != UserRole.none) {
-        emit(AuthLoggedIn(user: appUser));
-      } else {
-        emit(AuthLoggedOut());
-      }
-    });
-
-    
   }
 }

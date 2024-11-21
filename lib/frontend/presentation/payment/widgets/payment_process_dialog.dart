@@ -8,7 +8,8 @@ import 'package:kerja_praktek/frontend/common/components/app_dialog.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
-import 'package:kerja_praktek/frontend/common/utils/formatter.dart';
+import 'package:kerja_praktek/frontend/common/utils/app_formatter.dart';
+import 'package:kerja_praktek/frontend/common/utils/app_printer.dart';
 import 'package:kerja_praktek/frontend/presentation/setting/widget/text_description.dart';
 import 'package:kerja_praktek/main.dart';
 import 'package:kerja_praktek/models/order.dart';
@@ -22,6 +23,11 @@ class PaymentProcessDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     void saveOrderToDatabase() {
       context.read<OrderBloc>().add(OrderAdd(order: orderModel));
+    }
+
+    void printReceipt() {
+      AppPrinter appPrinter = AppPrinter();
+      appPrinter.print(orderModel);
     }
 
     return AlertDialog(
@@ -142,7 +148,9 @@ class PaymentProcessDialog extends StatelessWidget {
                       isActive: false,
                       onTap: () {
                         saveOrderToDatabase();
+
                         //! Print The Receipt
+                        printReceipt();
                       },
                     ),
                   ],

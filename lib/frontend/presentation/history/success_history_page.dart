@@ -20,13 +20,11 @@ class SuccessHistoryPage extends StatelessWidget {
           if (successOrder.isEmpty) {
             return const HistoryEmptyCard();
           } else {
-            return Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: successOrder.length,
-                itemBuilder: (context, index) => SuccessHistoryCard(
-                  orderModel: successOrder[index],
-                ),
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: successOrder.length,
+              itemBuilder: (context, index) => SuccessHistoryCard(
+                orderModel: successOrder[index],
               ),
             );
           }
@@ -40,11 +38,11 @@ class SuccessHistoryPage extends StatelessWidget {
             ),
           );
         }
-        return Expanded(
-          child: Container(
-            alignment: Alignment.center,
-            child: const CircularProgressIndicator(),
-          ),
+        return Container(
+          width: double.infinity,
+          height: double.infinity,
+          alignment: Alignment.center,
+          child: const CircularProgressIndicator(),
         );
       },
     );

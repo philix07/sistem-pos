@@ -10,7 +10,7 @@ import 'package:kerja_praktek/frontend/common/components/app_scaffold.dart';
 import 'package:kerja_praktek/frontend/common/components/spaces.dart';
 import 'package:kerja_praktek/frontend/common/style/app_colors.dart';
 import 'package:kerja_praktek/frontend/common/style/app_style.dart';
-import 'package:kerja_praktek/frontend/common/utils/formatter.dart';
+import 'package:kerja_praktek/frontend/common/utils/app_formatter.dart';
 import 'package:kerja_praktek/frontend/presentation/home/widgets/data_empty.dart';
 import 'package:kerja_praktek/frontend/presentation/payment/widgets/order_card.dart';
 import 'package:kerja_praktek/frontend/presentation/payment/widgets/payment_process_dialog.dart';
@@ -70,8 +70,22 @@ class _PaymentPageState extends State<PaymentPage> {
                       alignment: Alignment.center,
                       width: double.maxFinite,
                       height: double.maxFinite,
-                      child: const DataEmpty(
-                        title: "Tidak Ada Order",
+                      child: Column(
+                        children: [
+                          Text(
+                            "Order Detail",
+                            textAlign: TextAlign.center,
+                            style: AppTextStyle.black(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const Expanded(
+                            child: DataEmpty(
+                              title: "Tidak Ada Order",
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   } else {
@@ -84,7 +98,10 @@ class _PaymentPageState extends State<PaymentPage> {
                               child: Text(
                                 "Order Detail",
                                 textAlign: TextAlign.center,
-                                style: AppTextStyle.blue(fontSize: 16.0),
+                                style: AppTextStyle.black(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ),
                             InkWell(
