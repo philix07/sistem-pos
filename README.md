@@ -7,7 +7,6 @@
 ✅ **Transaction Management** - Save transactions along with detailed records.  
 ✅ **Sales Reports** - Get detailed insights into sales performance.  
 ✅ **Receipt Printing** - Print physical receipts as proof of transactions.  
-✅ **Inventory Integration** - Automatically update stock levels upon purchase.  
 ✅ **User Authentication** - Secure login system for different roles.  
 
 ## 🖥️ Tech Stack
@@ -15,4 +14,5 @@
 🔹 **Frontend**: Flutter  
 🔹 **Backend**: Firebase  
 🔹 **Database**: Firebase Firestore  
-🔹 **Hardware Support**: POS Printer 
+🔹 **Auth**: Firebase Authentication  
+🔹 **Hardware Support**: Thermal Printer 
