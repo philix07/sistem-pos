@@ -9,6 +9,7 @@
 ✅ **Receipt Printing** - Print physical receipts as proof of transactions.  
 ✅ **User Authentication** - Secure login system for different roles.  
 
+
 ## 🖥️ Tech Stack
 
 🔹 **Frontend**: Flutter  
@@ -16,3 +17,10 @@
 🔹 **Database**: Firebase Firestore  
 🔹 **Auth**: Firebase Authentication  
 🔹 **Hardware Support**: Thermal Printer 
+
+
+## 👨‍💻 Author
+
+Developed by **Felix Liando**  
+📧 Email: felix.liando07@gmail.com  
+🔗 [GitHub](https://github.com/philix07) | [LinkedIn](https://www.linkedin.com/in/felix-liando-324306250/)  
